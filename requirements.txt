@@ -1,0 +1,4 @@
+clock==0.1
+matplotlib==3.4.2
+ntplib==0.4.0
+Pillow==8.2.0

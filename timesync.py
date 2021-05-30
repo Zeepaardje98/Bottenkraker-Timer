@@ -1,18 +1,19 @@
 import tkinter as tk
-from PIL import ImageTk,Image
+
+from PIL import ImageTk, Image
+
 from clock import Clock
-import matplotlib.pyplot as plt
 
 
 class Timesync:
     def __init__(self, window):
         self.window = window
         self.servers = {'standard': [0, ''],
-                        'pool.ntp.org': [85, 'images/TW.PNG']} # get this from settings later
-        self.selected = 'pool.ntp.org' # get this from settings later
+                        'pool.ntp.org': [85, 'images/TW.PNG']}  # get this from settings later
+        self.selected = 'pool.ntp.org'  # get this from settings later
         self.clock = Clock(self.servers['standard'][0], self.selected, self.servers[self.selected][0], 30)
         self.canvas = None
-        self.file = None # Current image
+        self.file = None  # Current image
 
         self.sync_symbol = tk.Canvas(self.window, width=30, height=20)
         self.current_symbol = self.sync_symbol.create_oval(2, 2, 11, 11, fill="red")
@@ -43,7 +44,7 @@ class Timesync:
 
     def setup_window(self):
         # Frame of our sync interface
-        server_frame = tk.Frame(self.window, width=100 + 40, height=30+80)
+        server_frame = tk.Frame(self.window, width=100 + 40, height=30 + 80)
 
         # Stringvar with selected server
         sv_server = tk.StringVar(name="SERVER")
@@ -55,8 +56,8 @@ class Timesync:
         # width: 140, height: 30. (0, 80)
         selector = tk.OptionMenu(server_frame, sv_server, *self.servers)
         selector.place(x=0, y=65, width=100, height=30)
-        submit_btn = tk.Button(server_frame, text='Sync', command= lambda: self.select_server(sv_server))
-        submit_btn.place(x=(100+5), y=65, width=35, height=28)
+        submit_btn = tk.Button(server_frame, text='Sync', command=lambda: self.select_server(sv_server))
+        submit_btn.place(x=(100 + 5), y=65, width=35, height=28)
 
         self.sync_symbol.place(in_=server_frame, relx=1.0, rely=0.7, x=5)
 

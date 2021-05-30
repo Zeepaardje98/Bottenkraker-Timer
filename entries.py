@@ -1,9 +1,11 @@
+import datetime
 import re
 import tkinter as tk
-import datetime
+
 
 def test():
     print("test")
+
 
 class Entries:
     def __init__(self, window):
@@ -27,8 +29,7 @@ class Entries:
         elif str(stringvar) == "SNIPEMS":
             string = stringvar.get()
             if self.sv_formats[3].match(string):
-                self.snipe_time = int(self.snipe_time) + (int(string)%1000)/1000
-
+                self.snipe_time = int(self.snipe_time) + (int(string) % 1000) / 1000
 
     def setup_window(self):
         sv_time = tk.StringVar(name="SNIPETIME")
@@ -36,7 +37,7 @@ class Entries:
         sv_time.trace("w", lambda name, index, mode, sv_time=sv_time: self.update_vars(sv_time))
         sv_ms.trace("w", lambda name, index, mode, sv_ms=sv_ms: self.update_vars(sv_ms))
 
-        entry_frame = tk.Frame(self.window, width=80+10+150, height=25+5+25)
+        entry_frame = tk.Frame(self.window, width=80 + 10 + 150, height=25 + 5 + 25)
         # Snipe Time label
         st_label = tk.Label(entry_frame, text="Snipe Time:", anchor='w')
         st_label.place(x=0, y=0, width=80, height=25)
