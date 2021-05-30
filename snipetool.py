@@ -7,7 +7,7 @@ from bar import Bar
 from entries import Entries
 from timesync import Timesync
 
-
+print("test")
 class SnipeTool:
     window = tk.Tk()
     entries = Entries(window)
