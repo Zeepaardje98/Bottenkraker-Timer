@@ -1,65 +1,63 @@
-#!/usr/bin/env python3
-import ntplib
-import sched
-import timeit
-from threading import Timer
-import datetime
+import tkinter as tk
+from PIL import ImageTk,Image
+from clock import Clock
+import matplotlib.pyplot as plt
 
-class ThreadedTimer:
-    def __init__(self, interval, function, *args, **kwargs):
-        self._timer     = None
-        self.interval   = interval #Interval in seconds
-        self.function   = function #Function to execute
-        self.args       = args #Arguments for the function
-        self.kwargs     = kwargs
-        self.is_running = False
-        self.start()
 
-    def _run(self):
-        self.is_running = False
-        self.start()
-        self.function(*self.args, **self.kwargs)
+class Timesync:
+    def __init__(self, window):
+        self.window = window
+        self.servers = {'standard': [0, ''],
+                        'pool.ntp.org': [85, 'images/TW.PNG']} # get this from settings later
+        self.selected = 'pool.ntp.org' # get this from settings later
+        self.clock = Clock(self.servers['standard'][0], self.selected, self.servers[self.selected][0], 30)
+        self.canvas = None
+        self.file = None # Current image
 
-    def start(self):
-        if not self.is_running:
-            self._timer = Timer(self.interval, self._run)
-            self._timer.start()
-            self.is_running = True
+        self.sync_symbol = tk.Canvas(self.window, width=30, height=20)
+        self.current_symbol = self.sync_symbol.create_oval(2, 2, 11, 11, fill="red")
+        self.sync_text = self.sync_symbol.create_text((2, 10), font="calibri 8", width=50, text="test", anchor='nw')
 
-    def stop(self):
-        self._timer.cancel()
-        self.is_running = False
+    # Resize an image given by Path, to the canvas. Set self.file as this image
+    def set_file(self, path):
+        img = Image.open(path)
+        img = img.resize((self.canvas.winfo_height(), self.canvas.winfo_width()), Image.ANTIALIAS)
+        self.file = ImageTk.PhotoImage(img)
 
-class Clock:
-    def get_time(self):
-        if self.address != '':
-            try:
-                start = int(datetime.datetime.now().timestamp()*1000)
-                response = self.client.request(self.address)
-                end = int(datetime.datetime.now().timestamp()*1000)
+    def update_image(self):
+        try:
+            if self.servers[self.selected][1] == '':
+                self.set_file("images/default.jpg")
+            else:
+                self.set_file(self.servers[self.selected][1])
+        except Exception:
+            self.set_file("images/default.jpg")
+        self.canvas.create_image(0, 0, image=self.file, anchor='nw')
 
-                trip_time = (end - start)/2
-                # print(trip_time)
-                self.server_time = int(response.tx_time*1000 + trip_time)
-                self.system_time = int(datetime.datetime.now().timestamp()*1000)
-                self.last_synced = self.system_time
-            except:
-                print('Could not sync with time server.')
-        else:
-            self.server_time = int(datetime.datetime.now().timestamp()*1000)
-            self.system_time = int(datetime.datetime.now().timestamp()*1000)
+    def select_server(self, sv_server):
+        self.clock.stop()
+        self.selected = sv_server.get()
+        self.clock = Clock(self.servers['standard'][0], sv_server.get(), self.servers[sv_server.get()][0], 30)
 
-    def __init__(self, server='', interval=30):
-        self.client = ntplib.NTPClient()
-        self.address = server
-        self.server_time = int(datetime.datetime.now().timestamp()*1000)
-        self.system_time = int(datetime.datetime.now().timestamp()*1000)
-        self.last_synced = 0
-        self.get_time()
-        self.sync_thread = ThreadedTimer(interval, self.get_time)
+        self.update_image()
 
-    def stop(self):
-        self.sync_thread.stop()
+    def setup_window(self):
+        # Frame of our sync interface
+        server_frame = tk.Frame(self.window, width=100 + 40, height=30+80)
 
-    def time_ms(self):
-        return int(self.server_time + (int(datetime.datetime.now().timestamp()*1000) - self.system_time))
+        # Stringvar with selected server
+        sv_server = tk.StringVar(name="SERVER")
+        sv_server.set(self.selected)
+
+        self.canvas = tk.Canvas(server_frame, width=60, height=60, background="grey")
+        self.canvas.place(x=80, y=0)
+
+        # width: 140, height: 30. (0, 80)
+        selector = tk.OptionMenu(server_frame, sv_server, *self.servers)
+        selector.place(x=0, y=65, width=100, height=30)
+        submit_btn = tk.Button(server_frame, text='Sync', command= lambda: self.select_server(sv_server))
+        submit_btn.place(x=(100+5), y=65, width=35, height=28)
+
+        self.sync_symbol.place(in_=server_frame, relx=1.0, rely=0.7, x=5)
+
+        return server_frame
