@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
-import tkinter as tk
 import datetime
 import math
-from PIL import Image, ImageTk
+import tkinter as tk
 
-from clock import Clock
-from entries import Entries
 from bar import Bar
+from entries import Entries
 from timesync import Timesync
 
-def test():
-    print("test")
 
 class SnipeTool:
     window = tk.Tk()
@@ -49,7 +45,7 @@ class SnipeTool:
 
         # MilliSecond after which the new seconds start, and we should update
         # the timestamp again
-        self.window.after(1000 - (round(time*1000) % 1000), self.update_second)
+        self.window.after(1000 - (round(time * 1000) % 1000), self.update_second)
 
     def update_bar(self):
         time = self.time_selector.clock.time_ms()
@@ -57,7 +53,7 @@ class SnipeTool:
         self.window.after(10, self.update_bar)
 
     def setup_window(self):
-        self.window.attributes('-topmost',True)
+        self.window.attributes('-topmost', True)
         self.window.geometry("404x152")
         self.window.title("Bottenkraker Snipetool")
         self.window.wm_iconbitmap('images/icon.ico')
@@ -71,7 +67,6 @@ class SnipeTool:
 
         bar_canvas = self.bar.setup_window()
         bar_canvas.place(x=0, y=110)
-
 
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 

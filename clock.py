@@ -1,17 +1,16 @@
-import tkinter as tk
-import ntplib
-import sched
-import timeit
-from threading import Timer, Thread
 import datetime
+from threading import Timer
+
+import ntplib
+
 
 class ThreadedTimer:
     def __init__(self, interval, function, *args, **kwargs):
-        self._timer     = None
-        self.interval   = interval
-        self.function   = function
-        self.args       = args
-        self.kwargs     = kwargs
+        self._timer = None
+        self.interval = interval
+        self.function = function
+        self.args = args
+        self.kwargs = kwargs
         self.is_running = False
         self.first = True
         self.start()
@@ -35,6 +34,7 @@ class ThreadedTimer:
         self._timer.cancel()
         self.is_running = False
 
+
 class Clock:
     def get_time(self):
         # Server is given, retrieve the corresponding server time
@@ -44,11 +44,11 @@ class Clock:
                 start = datetime.datetime.now().timestamp()
                 response = self.client.request(self.address)
                 end = datetime.datetime.now().timestamp()
-                trip_time = (end - start)/2
+                trip_time = (end - start) / 2
 
                 # Add the round trip time and the delay to the retrieved
                 # server time
-                self.server_time = response.tx_time + trip_time + (self.delay/1000)
+                self.server_time = response.tx_time + trip_time + (self.delay / 1000)
                 print(self.server_time)
                 self.system_time = datetime.datetime.now().timestamp()
                 self.last_synced = self.server_time
@@ -57,11 +57,10 @@ class Clock:
                 print('Could not sync with time server.')
         # No server is given, resync with the current system time
         else:
-            self.server_time = datetime.datetime.now().timestamp() + (self.st_delay/1000)
+            self.server_time = datetime.datetime.now().timestamp() + (self.st_delay / 1000)
             self.system_time = datetime.datetime.now().timestamp()
             self.last_synced = self.system_time
             self.server_sync = 'standard'
-
 
     def __init__(self, st_delay, server, delay, interval=30):
         self.client = ntplib.NTPClient()
@@ -74,7 +73,7 @@ class Clock:
         self.delay = delay
 
         # Sync the time with the system time
-        self.server_time = datetime.datetime.now().timestamp() + (self.st_delay/1000)
+        self.server_time = datetime.datetime.now().timestamp() + (self.st_delay / 1000)
         self.system_time = datetime.datetime.now().timestamp()
         self.last_synced = None
         self.server_sync = None

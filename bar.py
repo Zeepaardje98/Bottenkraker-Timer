@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 class Bar:
     def __init__(self, window):
         self.window = window
@@ -12,7 +13,7 @@ class Bar:
             self.bar_canvas.itemconfig(self.bar, fill='green')
         else:
             self.bar_canvas.itemconfig(self.bar, fill='orange')
-        fill = 1 + (round((time - snipe_time)*1000) % 1000) / 2.5
+        fill = 1 + (round((time - snipe_time) * 1000) % 1000) / 2.5
         self.bar_canvas.coords(self.bar, 1, 1, fill, 41)
 
     def setup_window(self):
