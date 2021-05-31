@@ -95,5 +95,4 @@ class Clock:
     def stop(self):
         if self.sync_thread:
             self.sync_thread.stop()
-        else:
-            raise AttributeError("can't stop Clock, since it's not running")
+            self.sync_thread = None

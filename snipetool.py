@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-import datetime
-import math
 import tkinter as tk
 
 from widgets.bar import Bar

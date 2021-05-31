@@ -1,5 +1,4 @@
 import tkinter as tk
-import datetime
 from PIL import ImageTk, Image
 
 from clock import Clock
