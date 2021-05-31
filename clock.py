@@ -32,11 +32,34 @@ class ThreadedTimer:
             self.is_running = True
 
     def stop(self):
-        self._timer.cancel()
-        self.is_running = False
+        if self.is_running:
+            self._timer.cancel()
+            self.is_running = False
 
 
 class Clock:
+    def __init__(self, st_delay, server, delay, interval=30):
+        self.client = ntplib.NTPClient()
+
+        # The delay for the system time (datetime.datetime.now())
+        self.st_delay = st_delay
+        # Adress of the timeserver
+        self.address = server
+        # The delay for the server time
+        self.delay = delay
+        # The interval for when the clock tries to sync with the server
+        self.interval = interval
+
+        # Sync the time with the system time
+        self.server_time = datetime.datetime.now().timestamp() + (self.st_delay / 1000)
+        self.system_time = datetime.datetime.now().timestamp()
+        self.last_synced = None
+        self.server_sync = None
+
+        # Start thread to keep retrieving the server time
+        self.sync_thread = None
+
+
     def get_time(self):
         # Server is given, retrieve the corresponding server time
         if self.address != 'standard':
@@ -63,28 +86,14 @@ class Clock:
             self.last_synced = self.system_time
             self.server_sync = 'standard'
 
-    def __init__(self, st_delay, server, delay, interval=30):
-        self.client = ntplib.NTPClient()
-
-        # The delay for the system time (datetime.datetime.now())
-        self.st_delay = st_delay
-        # Adress of the timeserver
-        self.address = server
-        # The delay for the server time
-        self.delay = delay
-
-        # Sync the time with the system time
-        self.server_time = datetime.datetime.now().timestamp() + (self.st_delay / 1000)
-        self.system_time = datetime.datetime.now().timestamp()
-        self.last_synced = None
-        self.server_sync = None
-
-        # Start thread to keep retrieving the server time
-        self.sync_thread = ThreadedTimer(interval, self.get_time)
-
-
-    def stop(self):
-        self.sync_thread.stop()
-
     def time_ms(self):
         return self.server_time + (datetime.datetime.now().timestamp() - self.system_time)
+
+    def start(self):
+        self.sync_thread = ThreadedTimer(self.interval, self.get_time)
+
+    def stop(self):
+        if self.sync_thread:
+            self.sync_thread.stop()
+        else:
+            raise AttributeError("can't stop Clock, since it's not running")

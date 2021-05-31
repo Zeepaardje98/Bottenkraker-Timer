@@ -15,47 +15,8 @@ class SnipeTool:
     window = tk.Tk()
 
     entries = Entries(window)
-    bar = Bar(window, Settings(settings.get_settings(['bar'])))
     time_selector = Timesync(window, Settings(settings.get_settings(['timesync'])))
-
-
-    def string_sync(self):
-        clock = self.time_selector.clock
-        last_synced = clock.last_synced
-        time = clock.time_ms()
-        diff = time - last_synced
-
-        if diff < 60:
-            return str(round(diff)) + " s"
-        if diff >= 60:
-            return str(math.floor(diff / 60)) + " m"
-
-    def update_second(self):
-        time = self.time_selector.clock.time_ms()
-
-        # Make a timestamp from the current server time and place it onto the
-        # bar
-        string = datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%d %H:%M:%S")
-        self.bar.bar_canvas.itemconfig(self.bar.bar_text, text=string)
-
-        # Update the symbol and text of last server sync
-        if self.time_selector.clock.server_sync:
-            self.time_selector.sync_symbol.delete(self.time_selector.current_symbol)
-            self.time_selector.current_symbol = self.time_selector.sync_symbol.create_oval(2, 2, 11, 11, fill="green")
-            self.time_selector.sync_symbol.itemconfig(self.time_selector.sync_text, text=self.string_sync())
-        else:
-            self.time_selector.sync_symbol.delete(self.time_selector.current_symbol)
-            self.time_selector.current_symbol = self.time_selector.sync_symbol.create_oval(2, 2, 11, 11, fill="red")
-            self.time_selector.sync_symbol.itemconfig(self.time_selector.sync_text, text="")
-
-        # MilliSecond after which the new seconds start, and we should update
-        # the timestamp again
-        self.window.after(1000 - (round(time * 1000) % 1000), self.update_second)
-
-    def update_bar(self):
-        time = self.time_selector.clock.time_ms()
-        self.bar.update_bar(time, self.entries.snipe_time)
-        self.window.after(10, self.update_bar)
+    bar = Bar(window, Settings(settings.get_settings(['bar'])))
 
     def setup_window(self):
         self.window.attributes('-topmost', True)
@@ -74,16 +35,19 @@ class SnipeTool:
 
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 
+    def run(self):
+        self.time_selector.start()
+        self.bar.start(self.time_selector, self.entries)
+
     def on_closing(self):
-        self.time_selector.clock.stop()
+        self.time_selector.stop()
+        self.bar.stop()
         self.window.destroy()
 
     def setup(self):
         self.setup_window()
-        self.update_bar()
-        self.update_second()
+        self.run()
         self.window.mainloop()
-
 
 tool = SnipeTool()
 tool.setup()
