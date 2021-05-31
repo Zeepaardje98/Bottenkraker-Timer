@@ -3,9 +3,9 @@ import datetime
 import math
 import tkinter as tk
 
-from bar import Bar
-from entries import Entries
-from timesync import Timesync
+from widgets.bar import Bar
+from widgets.entries import Entries
+from widgets.timesync import Timesync
 from settings import Settings
 
 class SnipeTool:
@@ -65,7 +65,6 @@ class SnipeTool:
 
         selector = self.time_selector.setup_window()
         selector.place(x=225, y=10)
-        # self.time_selector.canvas.create_image(0, 0, image=self.time_selector.file, anchor='nw')
 
         entry_frame = self.entries.setup_window()
         entry_frame.place(x=55, y=10)
