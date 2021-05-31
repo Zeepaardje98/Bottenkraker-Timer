@@ -6,15 +6,16 @@ from clock import Clock
 
 
 class Timesync:
-    def __init__(self, window):
+    def __init__(self, window, settings):
         self.window = window
-        self.servers = {'standard': [0, ''],
-                        'pool.ntp.org': [85, 'images/TW.PNG']}  # get this from settings later
-        self.selected = 'pool.ntp.org'  # get this from settings later
-        self.clock = Clock(self.servers['standard'][0], self.selected, self.servers[self.selected][0], 30)
+
+        self.servers = settings.get_settings(['servers'])
+        self.selected = settings.get_settings(['selected'])  # get this from settings later
+        print(self.selected, self.servers)
+        self.clock = Clock(self.servers['standard']['delay'], self.selected, self.servers[self.selected]['delay'], 30)
+
         self.canvas = None
         self.file = None  # Current image
-
         self.sync_symbol = tk.Canvas(self.window, width=30, height=20)
         self.current_symbol = self.sync_symbol.create_oval(2, 2, 11, 11, fill="red")
         self.sync_text = self.sync_symbol.create_text((2, 10), font="calibri 8", width=50, text="test", anchor='nw')
@@ -27,10 +28,10 @@ class Timesync:
 
     def update_image(self):
         try:
-            if self.servers[self.selected][1] == '':
+            if self.servers[self.selected]['image'] == '':
                 self.set_file("images/default.jpg")
             else:
-                self.set_file(self.servers[self.selected][1])
+                self.set_file(self.servers[self.selected]['image'])
         except Exception:
             self.set_file("images/default.jpg")
         self.canvas.create_image(0, 0, image=self.file, anchor='nw')
@@ -38,7 +39,7 @@ class Timesync:
     def select_server(self, sv_server):
         self.clock.stop()
         self.selected = sv_server.get()
-        self.clock = Clock(self.servers['standard'][0], sv_server.get(), self.servers[sv_server.get()][0], 30)
+        self.clock = Clock(self.servers['standard']['delay'], sv_server.get(), self.servers[sv_server.get()]['delay'], 30)
 
         self.update_image()
 

@@ -1,0 +1,18 @@
+timesync:
+    servers:
+        standard:
+            delay: 0
+            image: ''
+        pool.ntp.org:
+            delay: 85
+            image: 'images/TW.PNG'
+    selected: 'pool.ntp.org'
+
+bar:
+    colors:
+        background:
+            'grey'
+        fill:
+            'orange'
+        fill_done:
+            'green'

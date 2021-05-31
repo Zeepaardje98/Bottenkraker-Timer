@@ -3,7 +3,8 @@ from threading import Timer
 
 import ntplib
 
-
+# Class imported from https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
+# This class can run a function every n seconds, on its own thread.
 class ThreadedTimer:
     def __init__(self, interval, function, *args, **kwargs):
         self._timer = None
@@ -78,18 +79,9 @@ class Clock:
         self.last_synced = None
         self.server_sync = None
 
-        # self.window = window
-        # self.sync_symbol = None
-        # self.current_symbol = None
-        # self.setup_window()
-
         # Start thread to keep retrieving the server time
         self.sync_thread = ThreadedTimer(interval, self.get_time)
 
-    # def setup_window(self):
-    #     self.sync_symbol = tk.Canvas(self.window, width=10, height=10)
-    #     self.current_symbol = self.sync_symbol.create_oval(2, 2, 11, 11, fill="red")
-    #     print("red")
 
     def stop(self):
         self.sync_thread.stop()

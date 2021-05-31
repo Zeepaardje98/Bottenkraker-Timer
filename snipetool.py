@@ -6,12 +6,18 @@ import tkinter as tk
 from bar import Bar
 from entries import Entries
 from timesync import Timesync
+from settings import Settings
 
 class SnipeTool:
+    settings = Settings()
+    settings.load_settings("settings/snipetool_config.yaml")
+
     window = tk.Tk()
+
     entries = Entries(window)
-    bar = Bar(window)
-    time_selector = Timesync(window)
+    bar = Bar(window, Settings(settings.get_settings(['bar'])))
+    time_selector = Timesync(window, Settings(settings.get_settings(['timesync'])))
+
 
     def string_sync(self):
         clock = self.time_selector.clock
