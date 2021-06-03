@@ -15,7 +15,10 @@ class Settings:
                 return False
         return True
 
-    def get_settings(self, keys):
+    def get_settings(self, keys, default=None):
+        if not key_exists:
+            update_settings(self, keys, default)
+            return default
         return reduce(operator.getitem, keys, self._settings)
 
     def update_settings(self, keys, value):

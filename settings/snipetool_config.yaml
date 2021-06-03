@@ -9,6 +9,7 @@ entries:
 ghub:
   image: images/Ghub_logo_dark.png
   link: https://github.com/Zeepaardje98/Bottenkraker-Timer
+theme: dark
 timesync:
   selected: pool.ntp.org
   servers:
