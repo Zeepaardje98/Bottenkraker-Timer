@@ -4,6 +4,7 @@ import tkinter as tk
 from widgets.bar import Bar
 from widgets.entries import Entries
 from widgets.timesync import Timesync
+from widgets.settingsmenu import SettingsMenu
 from settings import Settings
 
 class SnipeTool:
@@ -21,6 +22,7 @@ class SnipeTool:
         self.entries = Entries(self.window, self.snipe_time)
         self.time_selector = Timesync(self.window, self.clock, Settings(self.settings.get_settings(['timesync'])))
         self.bar = Bar(self.window, Settings(self.settings.get_settings(['bar'])))
+        self.settingsmenu = SettingsMenu(self.window, self.settings)
 
 
     def setup_window(self):
@@ -29,6 +31,7 @@ class SnipeTool:
         self.window.title("Bottenkraker Snipetool")
         self.window.wm_iconbitmap('images/icon.ico')
 
+        # x 225 - 365
         selector = self.time_selector.setup_window()
         selector.place(x=225, y=10)
 
@@ -37,6 +40,9 @@ class SnipeTool:
 
         bar_canvas = self.bar.setup_window()
         bar_canvas.place(x=0, y=110)
+
+        settings_btn = self.settingsmenu.setup_window()
+        settings_btn.place(x=375, y=10)
 
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 

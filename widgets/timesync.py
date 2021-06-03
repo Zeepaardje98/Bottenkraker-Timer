@@ -3,6 +3,9 @@ from PIL import ImageTk, Image
 
 from clock import Clock
 
+# TODO: place this function in a file full of helper functions
+def open_image(path, size):
+    return ImageTk.PhotoImage(Image.open(path).resize(size, Image.ANTIALIAS))
 
 class Timesync:
     def __init__(self, window, clock_ref, settings):
@@ -32,18 +35,15 @@ class Timesync:
         self.current_symbol = None
         self.sync_text = None
 
-    def open_image(self, path):
-        return ImageTk.PhotoImage(Image.open(path).resize((self.image_canvas.winfo_height(), self.image_canvas.winfo_width()), Image.ANTIALIAS))
-
     # Update the canvas by drawing the image contained in self.file
     def update_image(self):
         try:
             if self.servers[self.selected]['image'] == '':
-                self.file = self.open_image("images/default.jpg")
+                self.file = open_image("images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
             else:
-                self.file = self.open_image(self.servers[self.selected]['image'])
+                self.file = open_image(self.servers[self.selected]['image'], (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
         except Exception:
-            self.file = self.open_image(self, "images/default.jpg")
+            self.file = open_image(self, "images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
         self.image_canvas.itemconfig(self.image, image=self.file)
 
     def select_server(self, sv_server):
@@ -90,7 +90,7 @@ class Timesync:
         # Canvas with server image
         self.image_canvas = tk.Canvas(server_frame, width=60, height=60, background="grey")
         self.image_canvas.place(x=80, y=0)
-        self.file = self.open_image("images/default.jpg")
+        self.file = open_image("images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
         self.image = self.image_canvas.create_image(0, 0, image=self.file, anchor='nw')
         # TODO: fix this actually placing an image(there is currently a bug
         #       where no image will show until a new server is synced)
