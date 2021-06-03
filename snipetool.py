@@ -48,6 +48,7 @@ class SnipeTool:
         self.time_selector.stop()
         self.bar.stop()
         self.window.destroy()
+        self.settings.save_settings("settings/snipetool_config.yaml")
 
     def setup(self):
         self.setup_window()
