@@ -8,9 +8,12 @@ def test():
 
 
 class Entries:
-    def __init__(self, window):
+    def __init__(self, window, entries_ref):
         self.window = window
-        self.snipe_time = 0
+
+        self.snipe_time = entries_ref
+        self.snipe_time += [0]
+
         self.sv_formats = [re.compile('^\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$'),
                            re.compile('^\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}:\d{1,3}$'),
                            re.compile('^\d{13,}\.\d{1,3}$'),
@@ -20,16 +23,16 @@ class Entries:
         if str(stringvar) == "SNIPETIME":
             string = stringvar.get()
             if self.sv_formats[0].match(string):
-                self.snipe_time = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S").timestamp()
+                self.snipe_time[0] = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S").timestamp()
             elif self.sv_formats[1].match(string):
-                self.snipe_time = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S:%f").timestamp()
+                self.snipe_time[0] = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S:%f").timestamp()
             elif self.sv_formats[2].match(string):
-                self.snipe_time = int(string)
+                self.snipe_time[0] = int(string)
 
         elif str(stringvar) == "SNIPEMS":
             string = stringvar.get()
             if self.sv_formats[3].match(string):
-                self.snipe_time = int(self.snipe_time) + (int(string) % 1000) / 1000
+                self.snipe_time[0] = int(self.snipe_time[0]) + (int(string) % 1000) / 1000
 
     def setup_window(self):
         sv_time = tk.StringVar(name="SNIPETIME")

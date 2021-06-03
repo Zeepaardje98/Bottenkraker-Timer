@@ -5,11 +5,12 @@ from clock import Clock
 
 
 class Timesync:
-    def __init__(self, window, settings):
+    def __init__(self, window, clock_ref, settings):
         self.servers = settings.get_settings(['servers'])
         self.selected = settings.get_settings(['selected'])  # get this from settings later
-        self.clock = Clock(self.servers['standard']['delay'], self.selected, self.servers[self.selected]['delay'], 10)
-        self.clock.start()
+        self.clock = clock_ref
+        self.clock += [Clock(self.servers['standard']['delay'], self.selected, self.servers[self.selected]['delay'], 10)]
+        self.clock[0].start()
 
         self.window = window
         self.is_running = False
@@ -47,10 +48,10 @@ class Timesync:
         self.canvas.create_image(0, 0, image=self.file, anchor='nw')
 
     def select_server(self, sv_server):
-        if self.clock:
-            self.clock.stop()
-        self.clock = Clock(self.servers['standard']['delay'], sv_server.get(), self.servers[sv_server.get()]['delay'], 10)
-        self.clock.start()
+        if self.clock[0]:
+            self.clock[0].stop()
+        self.clock[0] = Clock(self.servers['standard']['delay'], sv_server.get(), self.servers[sv_server.get()]['delay'], 10)
+        self.clock[0].start()
         self.selected = sv_server.get()
 
         self.update_image()
@@ -58,7 +59,7 @@ class Timesync:
     # Returns A string with the amount of seconds or minutes between now and
     # the last synchronisation with the server.
     def time_sync(self, time):
-        diff = time - self.clock.last_synced
+        diff = time - self.clock[0].last_synced
 
         if diff < 60:
             return str(round(diff)) + " s"
@@ -66,7 +67,7 @@ class Timesync:
             return str(math.floor(diff / 60)) + " m"
 
     def update_sync_symbol(self, time):
-        if self.clock.server_sync:
+        if self.clock[0].server_sync:
             self.sync_symbol.delete(self.current_symbol)
             self.current_symbol = self.sync_symbol.create_oval(2, 2, 11, 11, fill="green")
             self.sync_symbol.itemconfig(self.sync_text, text=self.time_sync(time))
@@ -104,12 +105,12 @@ class Timesync:
 
     # Execute update and do the same update a second later
     def run(self):
-        time = self.clock.time_ms()
+        time = self.clock[0].time_ms()
         # List of Updates
         self.update_sync_symbol(time)
 
         if self.is_running:
-            time = self.clock.time_ms()
+            time = self.clock[0].time_ms()
             self.update_thread = self.window.after(1000 - (round(time * 1000) % 1000), self.run)
 
     # Start running
@@ -122,6 +123,6 @@ class Timesync:
     def stop(self):
         if self.is_running:
             self.window.after_cancel(self.update_thread)
-            self.clock.stop()
+            self.clock[0].stop()
             self.update_thread = None
             self.is_running = False

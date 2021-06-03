@@ -40,32 +40,32 @@ class Bar:
 
     # Update the bar every 1/60th of a second
     # TODO: Fix running at steady 60fps
-    def run_bar(self, timesync, entries):
-        time = timesync.clock.time_ms()
-        self.update_bar(time, entries.snipe_time)
+    def run_bar(self, entries_ref, clock_ref):
+        time = clock_ref[0].time_ms()
+        self.update_bar(time, entries_ref[0])
 
         if self.is_running_bar:
-            self.update_bar_thread = self.window.after(10, self.run_bar, timesync, entries)
+            self.update_bar_thread = self.window.after(10, self.run_bar, entries_ref, clock_ref)
 
     # Update the timestamp every 1000 milliseconds
-    def run_timestamp(self, timesync):
-        time = timesync.clock.time_ms()
+    def run_timestamp(self, clock_ref):
+        time = clock_ref[0].time_ms()
         self.update_timestamp(time)
 
         if self.is_running_timestamp:
-            # time = timesync.clock.time_ms()
-            self.update_timestamp_thread = self.window.after(1000 - (round(time * 1000) % 1000), self.run_timestamp, timesync)
+            # time = timesync.clock[0].time_ms()
+            self.update_timestamp_thread = self.window.after(1000 - (round(time * 1000) % 1000), self.run_timestamp, clock_ref)
 
     # Start the bar
-    def start_bar(self, timesync, entries):
+    def start_bar(self, entries_ref, clock_ref):
         if not self.is_running_bar:
             self.is_running_bar = True
-            self.run_bar(timesync, entries)
+            self.run_bar(entries_ref, clock_ref)
 
-    def start_timestamp(self, timesync):
+    def start_timestamp(self, clock_ref):
         if not self.is_running_timestamp:
             self.is_running_timestamp = True
-            self.run_timestamp(timesync)
+            self.run_timestamp(clock_ref)
 
     def stop_bar(self):
         if not self.is_running_bar:
@@ -79,9 +79,9 @@ class Bar:
             self.update_timestamp_thread = None
             self.is_running_timestamp = False
 
-    def start(self, timesync, entries):
-        self.start_timestamp(timesync)
-        self.start_bar(timesync, entries)
+    def start(self, entries_ref, clock_ref):
+        self.start_timestamp(clock_ref)
+        self.start_bar(entries_ref, clock_ref)
 
     def stop(self):
         self.stop_timestamp()

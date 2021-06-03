@@ -7,14 +7,21 @@ from widgets.timesync import Timesync
 from settings import Settings
 
 class SnipeTool:
-    settings = Settings()
-    settings.load_settings("settings/snipetool_config.yaml")
+    def __init__(self):
+        self.settings = Settings()
+        self.settings.load_settings("settings/snipetool_config.yaml")
+        self.window = tk.Tk()
 
-    window = tk.Tk()
+        # Some variables which can be changed by the widgets. Which is why we
+        # need to pass these variables by reference instead of by value. Thus
+        # we use a mutable variable type
+        self.snipe_time = []
+        self.clock = []
 
-    entries = Entries(window)
-    time_selector = Timesync(window, Settings(settings.get_settings(['timesync'])))
-    bar = Bar(window, Settings(settings.get_settings(['bar'])))
+        self.entries = Entries(self.window, self.snipe_time)
+        self.time_selector = Timesync(self.window, self.clock, Settings(self.settings.get_settings(['timesync'])))
+        self.bar = Bar(self.window, Settings(self.settings.get_settings(['bar'])))
+
 
     def setup_window(self):
         self.window.attributes('-topmost', True)
@@ -35,7 +42,7 @@ class SnipeTool:
 
     def run(self):
         self.time_selector.start()
-        self.bar.start(self.time_selector, self.entries)
+        self.bar.start(self.snipe_time, self.clock)
 
     def on_closing(self):
         self.time_selector.stop()

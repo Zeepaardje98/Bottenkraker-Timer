@@ -35,6 +35,8 @@ class ThreadedTimer:
         if self.is_running:
             self._timer.cancel()
             self.is_running = False
+# End of code imported from stackoverflow
+#
 
 
 class Clock:
@@ -56,9 +58,8 @@ class Clock:
         self.last_synced = None
         self.server_sync = None
 
-        # Start thread to keep retrieving the server time
+        # Thread to keep retrieving the server time
         self.sync_thread = None
-
 
     def get_time(self):
         # Server is given, retrieve the corresponding server time
@@ -68,13 +69,16 @@ class Clock:
                 start = datetime.datetime.now().timestamp()
                 response = self.client.request(self.address)
                 end = datetime.datetime.now().timestamp()
-                trip_time = (end - start) / 2
 
                 # Add the round trip time and the delay to the retrieved
                 # server time
+                # NOTE: This still needs to be implemented correctly. See
+                # https://stackoverflow.com/questions/51390551/what-are-all-the-fields-in-a-python-ntplib-response-and-how-are-they-used
+                trip_time = (end - start) / 2
                 self.server_time = response.tx_time + trip_time + (self.delay / 1000)
                 print(self.server_time)
                 self.system_time = datetime.datetime.now().timestamp()
+
                 self.last_synced = self.server_time
                 self.server_sync = self.address
             except Exception:
