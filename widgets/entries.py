@@ -49,9 +49,9 @@ class Entries:
         sm_label.place(x=0, y=25 + 5, width=80, height=25)
         # Snipe Time entry
         st_entry = tk.Entry(entry_frame, textvariable=sv_time, validatecommand=test, width=150)
-        st_entry.place(in_=st_label, relx=1.0, x=10)
+        st_entry.place(in_=st_label, relx=1.0, x=10, y=-1)
         # Snipe Ms entry
         sm_entry = tk.Entry(entry_frame, textvariable=sv_ms, validatecommand=test, width=150)
-        sm_entry.place(in_=sm_label, relx=1.0, x=10)
+        sm_entry.place(in_=sm_label, relx=1.0, x=10, y=-1)
 
         return entry_frame

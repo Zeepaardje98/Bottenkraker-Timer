@@ -22,7 +22,7 @@ class SnipeTool:
         self.entries = Entries(self.window, self.snipe_time)
         self.time_selector = Timesync(self.window, self.clock, Settings(self.settings.get_settings(['timesync'])))
         self.bar = Bar(self.window, Settings(self.settings.get_settings(['bar'])))
-        self.settingsmenu = SettingsMenu(self.window, self.settings)
+        self.settingsmenu = SettingsMenu(self, self.window, self.settings)
 
 
     def setup_window(self):
