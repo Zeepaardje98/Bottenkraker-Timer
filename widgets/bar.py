@@ -10,18 +10,23 @@ class Bar:
         self.bar_text = None
         self.bar = None
 
+        self.color_done = False
+
         self.update_bar_thread = None
         self.is_running_bar = False
         self.update_timestamp_thread = None
         self.is_running_timestamp = False
 
     def update_bar(self, time, full_time):
-        if (full_time - 1 < time) and (full_time > time):
-            self.bar_canvas.itemconfig(self.bar, fill=self.bar_colors['fill_done'])
-        else:
+        fill_done = (full_time - 1 < time) and (full_time > time)
+        if (not self.color_done) and fill_done:
+                self.bar_canvas.itemconfig(self.bar, fill=self.bar_colors['fill_done'])
+                self.color_done = True
+        elif not fill_done:
             self.bar_canvas.itemconfig(self.bar, fill=self.bar_colors['fill'])
+            self.color_done = False
         fill = 1 + (round((time - full_time) * 1000) % 1000) / 2.5
-        self.bar_canvas.coords(self.bar, 1, 1, fill, 41)
+        self.bar_canvas.coords(self.bar, 1, 1, fill, 42)
 
     def update_timestamp(self, time):
         # Make a timestamp from the current server time and place it onto the
@@ -33,7 +38,7 @@ class Bar:
         self.bar_canvas = tk.Canvas(self.window, width=400, height=40, background=self.bar_colors['background'])
 
         # Colored loading bar
-        self.bar = self.bar_canvas.create_rectangle(1, 1, 201, 41, fill=self.bar_colors['fill'], width=0)
+        self.bar = self.bar_canvas.create_rectangle(1, 1, 201, 42, fill=self.bar_colors['fill'], width=0)
         self.bar_text = self.bar_canvas.create_text((200, 20), font="calibri 20 bold", width=300)
 
         return self.bar_canvas
