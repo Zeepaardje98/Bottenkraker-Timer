@@ -3,6 +3,9 @@ bar:
     background: grey
     fill: orange
     fill_done: green
+entries:
+  right_color: white
+  wrong_color: '#E8A19C'
 timesync:
   selected: pool.ntp.org
   servers:

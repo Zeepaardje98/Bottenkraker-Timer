@@ -8,8 +8,12 @@ def test():
 
 
 class Entries:
-    def __init__(self, window, entries_ref):
+    def __init__(self, window, entries_ref, settings):
         self.window = window
+        self.settings = settings
+
+        self.st_entry = None
+        self.sm_entry = None
 
         self.snipe_time = entries_ref
         self.snipe_time += [0]
@@ -23,16 +27,29 @@ class Entries:
         if str(stringvar) == "SNIPETIME":
             string = stringvar.get()
             if self.sv_formats[0].match(string):
+                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
                 self.snipe_time[0] = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S").timestamp()
             elif self.sv_formats[1].match(string):
+                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
                 self.snipe_time[0] = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S:%f").timestamp()
+            # TODO: We should be able to paste a timestamp, this has not yet been tested
             elif self.sv_formats[2].match(string):
-                self.snipe_time[0] = int(string)
+                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
+                self.snipe_time[0] = float(string)
+            elif string == '':
+                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
+            else:
+                self.st_entry.config({"background": self.settings.get_settings(['wrong_color'])})
 
         elif str(stringvar) == "SNIPEMS":
             string = stringvar.get()
             if self.sv_formats[3].match(string):
+                self.sm_entry.config({"background": self.settings.get_settings(['right_color'])})
                 self.snipe_time[0] = int(self.snipe_time[0]) + (int(string) % 1000) / 1000
+            elif string == '':
+                self.sm_entry.config({"background": self.settings.get_settings(['right_color'])})
+            else:
+                self.sm_entry.config({"background": self.settings.get_settings(['wrong_color'])})
 
     def setup_window(self):
         sv_time = tk.StringVar(name="SNIPETIME")
@@ -48,10 +65,10 @@ class Entries:
         sm_label = tk.Label(entry_frame, text="Snipe Ms:", anchor='w')
         sm_label.place(x=0, y=25 + 5, width=80, height=25)
         # Snipe Time entry
-        st_entry = tk.Entry(entry_frame, textvariable=sv_time, validatecommand=test, width=150)
-        st_entry.place(in_=st_label, relx=1.0, x=10, y=-1)
+        self.st_entry = tk.Entry(entry_frame, textvariable=sv_time, width=150)
+        self.st_entry.place(in_=st_label, relx=1.0, x=10, y=-1)
         # Snipe Ms entry
-        sm_entry = tk.Entry(entry_frame, textvariable=sv_ms, validatecommand=test, width=150)
-        sm_entry.place(in_=sm_label, relx=1.0, x=10, y=-1)
+        self.sm_entry = tk.Entry(entry_frame, textvariable=sv_ms, width=150)
+        self.sm_entry.place(in_=sm_label, relx=1.0, x=10, y=-1)
 
         return entry_frame
