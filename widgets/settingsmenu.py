@@ -1,9 +1,7 @@
 import tkinter as tk
-from PIL import ImageTk, Image
 import re
 
-def open_image(path, size):
-    return ImageTk.PhotoImage(Image.open(path).resize(size, Image.ANTIALIAS))
+from help_funcs.helper import open_image
 
 class SettingsMenu:
     def __init__(self, parent, window, settings):

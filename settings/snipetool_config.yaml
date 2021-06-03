@@ -6,6 +6,9 @@ bar:
 entries:
   right_color: white
   wrong_color: '#E8A19C'
+ghub:
+  image: images/Ghub_logo_dark.png
+  link: https://github.com/Zeepaardje98/Bottenkraker-Timer
 timesync:
   selected: pool.ntp.org
   servers:
