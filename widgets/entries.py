@@ -14,6 +14,8 @@ class Entries:
 
         self.st_entry = None
         self.sm_entry = None
+        self.st_entry_white = True
+        self.sm_entry_white = True
 
         self.snipe_time = entries_ref
         self.snipe_time += [0]
@@ -25,31 +27,45 @@ class Entries:
 
     def update_vars(self, stringvar):
         if str(stringvar) == "SNIPETIME":
+            entry_white = True
             string = stringvar.get()
             if self.sv_formats[0].match(string):
-                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
                 self.snipe_time[0] = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S").timestamp()
             elif self.sv_formats[1].match(string):
-                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
                 self.snipe_time[0] = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S:%f").timestamp()
             # TODO: We should be able to paste a timestamp, this has not yet been tested
             elif self.sv_formats[2].match(string):
-                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
                 self.snipe_time[0] = float(string)
             elif string == '':
-                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
+                entry_white = True
             else:
+                entry_white = False
+
+            # Change entry color based on right/wrong input
+            if not entry_white and self.st_entry_white:
                 self.st_entry.config({"background": self.settings.get_settings(['wrong_color'])})
+                self.st_entry_white = False
+            elif entry_white and not self.st_entry_white:
+                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
+                self.st_entry_white = True
 
         elif str(stringvar) == "SNIPEMS":
+            entry_white = True
             string = stringvar.get()
             if self.sv_formats[3].match(string):
-                self.sm_entry.config({"background": self.settings.get_settings(['right_color'])})
                 self.snipe_time[0] = int(self.snipe_time[0]) + (int(string) % 1000) / 1000
             elif string == '':
-                self.sm_entry.config({"background": self.settings.get_settings(['right_color'])})
+                entry_white = True
             else:
+                entry_white = False
+
+            # Change entry color based on right/wrong input
+            if not entry_white and self.sm_entry_white:
                 self.sm_entry.config({"background": self.settings.get_settings(['wrong_color'])})
+                self.sm_entry_white = False
+            elif entry_white and not self.sm_entry_white:
+                self.sm_entry.config({"background": self.settings.get_settings(['right_color'])})
+                self.sm_entry_white = True
 
     def setup_window(self):
         sv_time = tk.StringVar(name="SNIPETIME")
