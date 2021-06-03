@@ -5,6 +5,7 @@ from widgets.bar import Bar
 from widgets.entries import Entries
 from widgets.timesync import Timesync
 from widgets.settingsmenu import SettingsMenu
+from widgets.githublink import Ghub
 from settings import Settings
 
 class SnipeTool:
@@ -23,6 +24,7 @@ class SnipeTool:
         self.time_selector = Timesync(self.window, self.clock, Settings(self.settings.get_settings(['timesync'])))
         self.bar = Bar(self.window, Settings(self.settings.get_settings(['bar'])))
         self.settingsmenu = SettingsMenu(self, self.window, self.settings)
+        self.ghublink = Ghub(self.window, Settings(self.settings.get_settings(['ghub'])))
 
 
     def setup_window(self):
@@ -42,7 +44,10 @@ class SnipeTool:
         bar_canvas.place(x=0, y=110)
 
         settings_btn = self.settingsmenu.setup_window()
-        settings_btn.place(x=375, y=10)
+        settings_btn.place(x=375, y=5)
+
+        ghub_btn = self.ghublink.setup_window()
+        ghub_btn.place(x=375, y=30)
 
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 

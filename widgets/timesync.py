@@ -1,11 +1,8 @@
 import tkinter as tk
-from PIL import ImageTk, Image
 
+from help_funcs.helper import open_image
 from clock import Clock
 
-# TODO: place this function in a file full of helper functions
-def open_image(path, size):
-    return ImageTk.PhotoImage(Image.open(path).resize(size, Image.ANTIALIAS))
 
 class Timesync:
     def __init__(self, window, clock_ref, settings):
