@@ -4,12 +4,12 @@ bar:
     fill: orange
     fill_done: green
 entries:
+  defaults:
+    arrival: vandaag 04:20:00
+    ms: 0
+    walktime: 00:00:00
   right_color: white
   wrong_color: '#E8A19C'
-  defaults:
-    arrival: vandaag 23:00:00
-    ms: 0
-    walktime: 00:14:00
 ghub:
   image: images/Ghub_logo_dark.png
   link: https://github.com/Zeepaardje98/Bottenkraker-Timer

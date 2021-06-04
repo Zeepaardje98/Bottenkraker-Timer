@@ -11,12 +11,15 @@ class Entries:
     def __init__(self, window, entries_ref, settings):
         self.window = window
         self.settings = settings
-        self.defaults = settings.get_settings(['defaults'])
+        self.defaults = settings.get_settings(['defaults'], {'arrival': 'vandaag 04:20:00', 'ms': 0, 'walktime': '00:00:00'})
 
         self.st_entry = None
         self.sm_entry = None
+        self.wt_entry = None
+
         self.st_entry_white = True
         self.sm_entry_white = True
+        self.wt_entry_white = True
 
         self.snipe_time = entries_ref
         self.snipe_time += [0]
@@ -59,7 +62,7 @@ class Entries:
                 self.send_time = datetime.datetime.fromtimestamp(self.snipe_time[0]).strftime("%H:%M:%S.%f")[:-3]
                 self.send_label.config(text=f'Send: {self.send_time}')
 
-            # vandaag + time implementation            
+            # vandaag + time implementation
             elif self.sv_formats[5].match(string):
                 string = f'{datetime.datetime.now().strftime("%Y-%m-%d")} {string[8:]}'
                 self.arrival_time = datetime.datetime.strptime(string, "%Y-%m-%d %H:%M:%S").timestamp()
@@ -67,7 +70,7 @@ class Entries:
                 self.send_time = datetime.datetime.fromtimestamp(self.snipe_time[0]).strftime("%H:%M:%S.%f")[:-3]
                 self.send_label.config(text=f'Send: {self.send_time}')
 
-            # morgen + time implementation    
+            # morgen + time implementation
             elif self.sv_formats[6].match(string):
                 tmr = datetime.datetime.now() + datetime.timedelta(days=1)
                 string = f'{tmr.strftime("%Y-%m-%d")} {string[7:]}'
@@ -75,11 +78,9 @@ class Entries:
                 self.snipe_time[0] = (int(self.arrival_time) - int(self.walk_time)) + self.ms
                 self.send_time = datetime.datetime.fromtimestamp(self.snipe_time[0]).strftime("%H:%M:%S.%f")[:-3]
                 self.send_label.config(text=f'Send: {self.send_time}')
-
-            elif string == '':
-                entry_white = True
-            else:
+            elif string != '':
                 entry_white = False
+
 
             # Change entry color based on right/wrong input
             if not entry_white and self.st_entry_white:
@@ -98,11 +99,9 @@ class Entries:
                 self.snipe_time[0] = (int(self.arrival_time) - int(self.walk_time)) + self.ms
                 self.send_time = datetime.datetime.fromtimestamp(self.snipe_time[0]).strftime("%H:%M:%S.%f")[:-3]
                 self.send_label.config(text=f'Send: {self.send_time}')
-
-            elif string == '':
-                entry_white = True
-            else:
+            elif string != '':
                 entry_white = False
+
 
             # Change entry color based on right/wrong input
             if not entry_white and self.sm_entry_white:
@@ -111,7 +110,7 @@ class Entries:
             elif entry_white and not self.sm_entry_white:
                 self.sm_entry.config({"background": self.settings.get_settings(['right_color'])})
                 self.sm_entry_white = True
-                
+
         elif str(stringvar) == "WALKTIME":
             entry_white = True
             string = stringvar.get()
@@ -122,16 +121,26 @@ class Entries:
                 self.snipe_time[0] = (int(self.arrival_time) - int(self.walk_time)) + self.ms
                 self.send_time = datetime.datetime.fromtimestamp(self.snipe_time[0]).strftime("%H:%M:%S.%f")[:-3]
                 self.send_label.config(text=f'Send: {self.send_time}')
+            elif string != '':
+                entry_white = False
+
+            if not entry_white and self.wt_entry_white:
+                self.wt_entry.config({"background": self.settings.get_settings(['wrong_color'])})
+                self.wt_entry_white = False
+            elif entry_white and not self.wt_entry_white:
+                self.wt_entry.config({"background": self.settings.get_settings(['right_color'])})
+                self.wt_entry_white = True
 
     def setup_window(self):
         sv_time = tk.StringVar(name="SNIPETIME")
         sv_walk = tk.StringVar(name="WALKTIME")
         sv_ms = tk.StringVar(name="SNIPEMS")
+
         sv_time.trace("w", lambda name, index, mode, sv_time=sv_time: self.update_vars(sv_time))
         sv_walk.trace("w", lambda name, index, mode, sv_time=sv_time: self.update_vars(sv_walk))
         sv_ms.trace("w", lambda name, index, mode, sv_ms=sv_ms: self.update_vars(sv_ms))
 
-        entry_frame = tk.Frame(self.window, width=80 + 10 + 150, height=25 + 5 + 25)
+        entry_frame = tk.Frame(self.window, width=80 + 10 + 150, height=85)
         # Sending time
         # Needs to be first because of update order
         self.send_label = tk.Label(entry_frame, text="Send: 00:00:00:000", anchor='w')
@@ -144,10 +153,10 @@ class Entries:
         # Walk Time label
         wt_label = tk.Label(entry_frame, text="Walk Time:", anchor='w')
         wt_label.place(x=0, y=25 + 5, width=80, height=25)
-
         # Snipe Ms label
         sm_label = tk.Label(entry_frame, text="Snipe Ms:", anchor='w')
-        sm_label.place(x=0, y=50 + 5, width=80, height=25)
+        sm_label.place(x=0, y=55 + 5, width=80, height=25)
+
         # Snipe Time entry
         self.st_entry = tk.Entry(entry_frame, textvariable=sv_time, width=150)
         self.st_entry.place(in_=st_label, relx=1.0, x=10, y=-1)

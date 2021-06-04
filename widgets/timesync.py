@@ -77,7 +77,7 @@ class Timesync:
 
     def setup_window(self):
         # Frame of our sync interface
-        server_frame = tk.Frame(self.window, width=100 + 40, height=30 + 130)
+        server_frame = tk.Frame(self.window, width=100 + 40, height=100)
 
         # Stringvar with selected server
         sv_server = tk.StringVar(name="SERVER")
@@ -101,9 +101,9 @@ class Timesync:
 
          # width: 140, height: 30. (0, 80)
         selector = tk.OptionMenu(server_frame, sv_server, *self.servers)
-        selector.place(x=0, y=110, width=100, height=30)
+        selector.place(x=0, y=70, width=100, height=30)
         submit_btn = tk.Button(server_frame, text='Sync', command=lambda: self.select_server(sv_server))
-        submit_btn.place(x=(100 + 5), y=110, width=35, height=28)
+        submit_btn.place(x=(100 + 5), y=70, width=35, height=28)
 
         return server_frame
 
