@@ -31,7 +31,7 @@ class Entries:
 
         self.sv_formats = [re.compile('^\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$'),          # yyyy-mm-dd hh:mm:ss
                            re.compile('^\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}:\d{1,3}$'),  # yyyy-mm-dd hh:mm:ss:xxx
-                           re.compile('^\d{13,}\.\d{1,3}$'),                                        # timestamp
+                           re.compile('^\d{13,}\.\d{1,3}$'),                                        # timestamp()
                            re.compile('^\d{1,3}$'),                                                 # xxx
                            re.compile('^\d{1,2}:\d{1,2}:\d{1,2}$'),                                 # hh:mm:ss
                            re.compile('^(vandaag)\s\d{1,2}:\d{1,2}:\d{1,2}$'),                      # vandaag hh:mm:ss
@@ -140,34 +140,33 @@ class Entries:
         sv_walk.trace("w", lambda name, index, mode, sv_time=sv_time: self.update_vars(sv_walk))
         sv_ms.trace("w", lambda name, index, mode, sv_ms=sv_ms: self.update_vars(sv_ms))
 
-        entry_frame = tk.Frame(self.window, width=80 + 10 + 150, height=85)
+        entry_frame = tk.Frame(self.window)#, background="green")
+
         # Sending time
         # Needs to be first because of update order
         self.send_label = tk.Label(entry_frame, text="Send: 00:00:00:000", anchor='w')
-        self.send_label.place(x=0, y=75 + 5, width=200, height=25)
         self.send_label.config(font=("calibri 12 bold"))
 
-        # Snipe Time label
-        st_label = tk.Label(entry_frame, text="Snipe Time:", anchor='w')
-        st_label.place(x=0, y=0, width=80, height=25)
-        # Walk Time label
-        wt_label = tk.Label(entry_frame, text="Walk Time:", anchor='w')
-        wt_label.place(x=0, y=25 + 5, width=80, height=25)
-        # Snipe Ms label
-        sm_label = tk.Label(entry_frame, text="Snipe Ms:", anchor='w')
-        sm_label.place(x=0, y=55 + 5, width=80, height=25)
+        st_label = tk.Label(entry_frame, text="Snipe Time:", anchor='w')#, background="red")
+        wt_label = tk.Label(entry_frame, text="Walk Time:", anchor='w')#, background="blue")
+        sm_label = tk.Label(entry_frame, text="Snipe Ms:", anchor='w')#, background="yellow")
 
         # Snipe Time entry
-        self.st_entry = tk.Entry(entry_frame, textvariable=sv_time, width=150)
-        self.st_entry.place(in_=st_label, relx=1.0, x=10, y=-1)
+        self.st_entry = tk.Entry(entry_frame, textvariable=sv_time, width=20)
         self.st_entry.insert(-1, self.defaults['arrival'])
         # Walk Time entry
-        self.wt_entry = tk.Entry(entry_frame, textvariable=sv_walk, width=150)
-        self.wt_entry.place(in_=wt_label, relx=1.0, x=10)
+        self.wt_entry = tk.Entry(entry_frame, textvariable=sv_walk, width=20)
         self.wt_entry.insert(-1, self.defaults['walktime'])
         # Snipe Ms entry
-        self.sm_entry = tk.Entry(entry_frame, textvariable=sv_ms, width=150)
-        self.sm_entry.place(in_=sm_label, relx=1.0, x=10, y=-1)
+        self.sm_entry = tk.Entry(entry_frame, textvariable=sv_ms, width=20)
         self.sm_entry.insert(-1, self.defaults['ms'])
+
+        st_label.grid(row=0, column=0, sticky="W")
+        wt_label.grid(row=1, column=0, sticky="W")
+        sm_label.grid(row=2, column=0, sticky="W")
+        self.st_entry.grid(row=0, column=1)
+        self.wt_entry.grid(row=1, column=1)
+        self.sm_entry.grid(row=2, column=1)
+        self.send_label.grid(row=3, column=0, columnspan=2)
 
         return entry_frame

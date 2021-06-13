@@ -35,7 +35,7 @@ class SnipeTool:
 
         # x 225 - 365
         selector = self.time_selector.setup_window()
-        selector.place(x=225, y=30)
+        selector.place(x=190, y=10)
 
         entry_frame = self.entries.setup_window()
         entry_frame.place(x=55, y=10)

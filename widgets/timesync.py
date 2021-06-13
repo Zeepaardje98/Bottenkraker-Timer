@@ -77,33 +77,33 @@ class Timesync:
 
     def setup_window(self):
         # Frame of our sync interface
-        server_frame = tk.Frame(self.window, width=100 + 40, height=100)
+        server_frame = tk.Frame(self.window)#, background="magenta")
 
         # Stringvar with selected server
         sv_server = tk.StringVar(name="SERVER")
         sv_server.set(self.selected)
 
-
         # Canvas with server image
-        self.image_canvas = tk.Canvas(server_frame, width=60, height=60, background="grey")
-        self.image_canvas.place(x=80, y=0)
-        self.file = open_image("images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
-        self.image = self.image_canvas.create_image(0, 0, image=self.file, anchor='nw')
         # TODO: fix this actually placing an image(there is currently a bug
         #       where no image will show until a new server is synced)
-
+        self.image_canvas = tk.Canvas(server_frame, width=80, height=80, background="grey")
+        self.file = open_image("images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
+        self.image = self.image_canvas.create_image(0, 0, image=self.file, anchor='nw')
 
         # Canvas with the synchronisation symbol + text
-        self.sync_symbol = tk.Canvas(self.window, width=30, height=20)
-        self.sync_symbol.place(in_=server_frame, relx=1.0, rely=0.7, x=5)
+        self.sync_symbol = tk.Canvas(server_frame, width=20, height=20)
         self.current_symbol = self.sync_symbol.create_oval(2, 2, 11, 11, fill="grey")
         self.sync_text = self.sync_symbol.create_text((2, 10), font="calibri 8", width=50, text="test", anchor='nw')
 
-         # width: 140, height: 30. (0, 80)
+        # Server select button with confirm
         selector = tk.OptionMenu(server_frame, sv_server, *self.servers)
-        selector.place(x=0, y=70, width=100, height=30)
+        selector.configure(width=10)
         submit_btn = tk.Button(server_frame, text='Sync', command=lambda: self.select_server(sv_server))
-        submit_btn.place(x=(100 + 5), y=70, width=35, height=28)
+
+        selector.grid(row=1, column=0, columnspan=2)
+        self.image_canvas.grid(row=0, column=1, columnspan=3)
+        submit_btn.grid(row=1, column=2)
+        self.sync_symbol.grid(row=1, column=3)
 
         return server_frame
 
