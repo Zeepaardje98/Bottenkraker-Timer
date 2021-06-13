@@ -44,7 +44,7 @@ class SettingsMenu:
         self.setup_settings()
 
         self.logo = open_image("images/settings_dark.png", (20,20))
-        settings_btn = tk.Button(self.window, image=self.logo, width=20, height=20, relief='flat', command=self.show_popup)
+        settings_btn = tk.Button(self.parent.sidebar, image=self.logo, width=20, height=20, relief='flat', command=self.show_popup)
         return settings_btn
 
     def setup_settings(self):

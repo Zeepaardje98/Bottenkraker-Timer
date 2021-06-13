@@ -76,8 +76,7 @@ class Timesync:
 
 
     def setup_window(self):
-        # Frame of our sync interface
-        server_frame = tk.Frame(self.window)#, background="magenta")
+        sync_frame = tk.Frame(self.window)#, background="magenta")
 
         # Stringvar with selected server
         sv_server = tk.StringVar(name="SERVER")
@@ -86,26 +85,25 @@ class Timesync:
         # Canvas with server image
         # TODO: fix this actually placing an image(there is currently a bug
         #       where no image will show until a new server is synced)
-        self.image_canvas = tk.Canvas(server_frame, width=80, height=80, background="grey")
+        self.image_canvas = tk.Canvas(self.window, width=80, height=80, background="grey")
         self.file = open_image("images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
         self.image = self.image_canvas.create_image(0, 0, image=self.file, anchor='nw')
 
         # Canvas with the synchronisation symbol + text
-        self.sync_symbol = tk.Canvas(server_frame, width=20, height=20)
-        self.current_symbol = self.sync_symbol.create_oval(2, 2, 11, 11, fill="grey")
-        self.sync_text = self.sync_symbol.create_text((2, 10), font="calibri 8", width=50, text="test", anchor='nw')
+        self.sync_symbol = tk.Canvas(sync_frame, width=20, height=20)
+        self.current_symbol = self.sync_symbol.create_oval(5, 2, 15, 11, fill="grey")
+        self.sync_text = self.sync_symbol.create_text((4, 10), font="calibri 8", width=50, text="test", anchor='nw')
 
         # Server select button with confirm
-        selector = tk.OptionMenu(server_frame, sv_server, *self.servers)
+        selector = tk.OptionMenu(sync_frame, sv_server, *self.servers)
         selector.configure(width=10)
-        submit_btn = tk.Button(server_frame, text='Sync', command=lambda: self.select_server(sv_server))
+        submit_btn = tk.Button(sync_frame, text='Sync', command=lambda: self.select_server(sv_server))
 
-        selector.grid(row=1, column=0, columnspan=2)
-        self.image_canvas.grid(row=0, column=1, columnspan=3)
-        submit_btn.grid(row=1, column=2)
-        self.sync_symbol.grid(row=1, column=3)
+        selector.grid(row=0, column=0)
+        submit_btn.grid(row=0, column=1)
+        self.sync_symbol.grid(row=0, column=2)
 
-        return server_frame
+        return sync_frame, self.image_canvas
 
     # Execute update and do the same update a second later
     def run(self):
