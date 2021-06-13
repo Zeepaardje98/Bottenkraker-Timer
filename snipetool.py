@@ -20,28 +20,28 @@ class SnipeTool:
         self.snipe_time = []
         self.clock = []
 
-        self.entries = Entries(self.window, self.snipe_time, Settings(self.settings.get_settings(['entries'])))
-        self.time_selector = Timesync(self.window, self.clock, Settings(self.settings.get_settings(['timesync'])))
-        self.bar = Bar(self.window, Settings(self.settings.get_settings(['bar'])))
+        self.entries = Entries(self.window, self.snipe_time, Settings(self.settings.get_settings(['entries'], {})))
+        self.time_selector = Timesync(self.window, self.clock, Settings(self.settings.get_settings(['timesync'], {})))
+        self.bar = Bar(self.window, Settings(self.settings.get_settings(['bar'], {})))
         self.settingsmenu = SettingsMenu(self, self.window, self.settings)
-        self.ghublink = Ghub(self.window, Settings(self.settings.get_settings(['ghub'])))
+        self.ghublink = Ghub(self.window, Settings(self.settings.get_settings(['ghub'], {})))
 
 
     def setup_window(self):
         self.window.attributes('-topmost', True)
-        self.window.geometry("404x183")
+        self.window.geometry("404x193")
         self.window.title("Bottenkraker Snipetool")
         self.window.wm_iconbitmap('images/icon.ico')
 
         # x 225 - 365
         selector = self.time_selector.setup_window()
-        selector.place(x=225, y=25)
+        selector.place(x=225, y=30)
 
         entry_frame = self.entries.setup_window()
         entry_frame.place(x=55, y=10)
 
         bar_canvas = self.bar.setup_window()
-        bar_canvas.place(x=0, y=140)
+        bar_canvas.place(x=0, y=150)
 
         settings_btn = self.settingsmenu.setup_window()
         settings_btn.place(x=375, y=5)

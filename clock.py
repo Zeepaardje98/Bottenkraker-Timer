@@ -66,16 +66,8 @@ class Clock:
         if self.address != 'standard':
             try:
                 print("getting", self.address)
-                start = datetime.datetime.now().timestamp()
                 response = self.client.request(self.address)
-                end = datetime.datetime.now().timestamp()
-
-                # Add the round trip time and the delay to the retrieved
-                # server time
-                # NOTE: This still needs to be implemented correctly. See
-                # https://stackoverflow.com/questions/51390551/what-are-all-the-fields-in-a-python-ntplib-response-and-how-are-they-used
-                trip_time = (end - start) / 2
-                self.server_time = response.tx_time + trip_time + (self.delay / 1000)
+                self.server_time = response.dest_time + response.offset + (self.delay / 1000)
                 print(self.server_time)
                 self.system_time = datetime.datetime.now().timestamp()
 
