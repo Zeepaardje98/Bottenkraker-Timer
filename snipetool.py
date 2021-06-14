@@ -31,7 +31,7 @@ class SnipeTool:
 
     def setup_window(self):
         self.window.attributes('-topmost', True)
-        self.window.geometry("404x193")
+        self.window.geometry("350x193")
         self.window.title("Bottenkraker Snipetool")
         self.window.wm_iconbitmap('images/icon.ico')
 

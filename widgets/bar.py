@@ -27,6 +27,7 @@ class Bar:
             self.bar_width = event.width
             self.bar_canvas.config(width=event.width)
             self.bar_canvas.scale(self.bar,0,0,wscale,1)
+            self.bar_canvas.scale(self.bar_text,0,0,wscale,1)
 
     def update_bar(self, time, full_time):
         fill_done = (full_time - 1 < time) and (full_time > time)
@@ -47,12 +48,11 @@ class Bar:
         self.bar_canvas.itemconfig(self.bar_text, text=string)
 
     def setup_window(self):
-        print(self.window.winfo_reqwidth())
         self.bar_canvas = tk.Canvas(self.window, width=self.bar_width, height=self.bar_height, background=self.bar_colors['background'])
 
         # Colored loading bar
-        self.bar = self.bar_canvas.create_rectangle(1, 1, 201, self.bar_height + 2, fill=self.bar_colors['fill'], width=0)
-        self.bar_text = self.bar_canvas.create_text((200, 20), font="calibri 20 bold", width=300)
+        self.bar = self.bar_canvas.create_rectangle(1, 1, 1, self.bar_height + 2, fill=self.bar_colors['fill'], width=0)
+        self.bar_text = self.bar_canvas.create_text((self.bar_width/2, 20), font="calibri 20 bold", width=300)
 
         return self.bar_canvas
 
