@@ -4,7 +4,11 @@ import datetime
 class Bar:
     def __init__(self, window, settings):
         self.window = window
+        self.window.bind("<Configure>", self.on_resize)
+
         self.bar_colors = settings.get_settings(['colors'])
+        self.bar_height = 40
+        self.bar_width = self.window.winfo_reqwidth()
 
         self.bar_canvas = None
         self.bar_text = None
@@ -17,6 +21,13 @@ class Bar:
         self.update_timestamp_thread = None
         self.is_running_timestamp = False
 
+    def on_resize(self, event):
+        if (event.widget == self.window):
+            wscale = float(event.width) / self.bar_width
+            self.bar_width = event.width
+            self.bar_canvas.config(width=event.width)
+            self.bar_canvas.scale(self.bar,0,0,wscale,1)
+
     def update_bar(self, time, full_time):
         fill_done = (full_time - 1 < time) and (full_time > time)
         if (not self.color_done) and fill_done:
@@ -25,8 +36,9 @@ class Bar:
         elif not fill_done:
             self.bar_canvas.itemconfig(self.bar, fill=self.bar_colors['fill'])
             self.color_done = False
-        fill = 1 + (round((time - full_time) * 1000) % 1000) / 2.5
-        self.bar_canvas.coords(self.bar, 1, 1, fill, 42)
+        percentage = (((time - full_time) * 1000) % 1000) / 10
+        fill = 1 + percentage * self.bar_canvas.winfo_reqwidth() / 100
+        self.bar_canvas.coords(self.bar, 1, 1, fill, 2 + self.bar_height)
 
     def update_timestamp(self, time):
         # Make a timestamp from the current server time and place it onto the
@@ -35,10 +47,11 @@ class Bar:
         self.bar_canvas.itemconfig(self.bar_text, text=string)
 
     def setup_window(self):
-        self.bar_canvas = tk.Canvas(self.window, width=400, height=40, background=self.bar_colors['background'])
+        print(self.window.winfo_reqwidth())
+        self.bar_canvas = tk.Canvas(self.window, width=self.bar_width, height=self.bar_height, background=self.bar_colors['background'])
 
         # Colored loading bar
-        self.bar = self.bar_canvas.create_rectangle(1, 1, 201, 42, fill=self.bar_colors['fill'], width=0)
+        self.bar = self.bar_canvas.create_rectangle(1, 1, 201, self.bar_height + 2, fill=self.bar_colors['fill'], width=0)
         self.bar_text = self.bar_canvas.create_text((200, 20), font="calibri 20 bold", width=300)
 
         return self.bar_canvas

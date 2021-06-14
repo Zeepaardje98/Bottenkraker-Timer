@@ -13,8 +13,8 @@ class SnipeTool:
         self.settings = Settings()
         self.settings.load_settings("settings/snipetool_config.yaml")
         self.window = tk.Tk()
-        self.widgetframe = tk.Frame(self.window)
-        self.sidebar = tk.Frame(self.window)
+        self.widgetframe = tk.Frame(self.window)#, background="green")
+        self.sidebar = tk.Frame(self.window)#, background="red")
 
         # Some variables which can be changed by the widgets. Which is why we
         # need to pass these variables by reference instead of by value. Thus
@@ -37,7 +37,7 @@ class SnipeTool:
 
         # Bar
         bar_canvas = self.bar.setup_window()
-        bar_canvas.pack(side="bottom")
+        bar_canvas.pack(side="bottom")#, expand=True, fill="x")
 
         # Input and information
         entry_frame = self.entries.setup_window()
@@ -51,10 +51,10 @@ class SnipeTool:
 
         # Sidebar
         settings_btn = self.settingsmenu.setup_window()
-        settings_btn.grid(row=0, column=0)
+        settings_btn.grid(row=0, column=0, pady=(2, 2))
 
         ghub_btn = self.ghublink.setup_window()
-        ghub_btn.grid(row=1, column=0)
+        ghub_btn.grid(row=1, column=0, pady=(2, 2))
 
         self.sidebar.pack(side="right", padx=(0, 10))
 
