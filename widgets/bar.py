@@ -4,7 +4,6 @@ import datetime
 class Bar:
     def __init__(self, window, settings):
         self.window = window
-        self.window.bind("<Configure>", self.on_resize)
 
         self.bar_colors = settings.get_settings(['colors'])
         self.bar_height = 40
@@ -22,12 +21,11 @@ class Bar:
         self.is_running_timestamp = False
 
     def on_resize(self, event):
-        if (event.widget == self.window):
-            wscale = float(event.width) / self.bar_width
-            self.bar_width = event.width
-            self.bar_canvas.config(width=event.width)
-            self.bar_canvas.scale(self.bar,0,0,wscale,1)
-            self.bar_canvas.scale(self.bar_text,0,0,wscale,1)
+        wscale = float(event.width) / self.bar_width
+        self.bar_width = event.width
+        self.bar_canvas.config(width=event.width)
+        self.bar_canvas.scale(self.bar,0,0,wscale,1)
+        self.bar_canvas.scale(self.bar_text,0,0,wscale,1)
 
     def update_bar(self, time, full_time):
         fill_done = (full_time - 1 < time) and (full_time > time)

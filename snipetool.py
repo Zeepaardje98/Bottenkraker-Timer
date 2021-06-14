@@ -12,7 +12,10 @@ class SnipeTool:
     def __init__(self):
         self.settings = Settings()
         self.settings.load_settings("settings/snipetool_config.yaml")
+
         self.window = tk.Tk()
+        self.window.bind("<Configure>", self.on_resize)
+
         self.widgetframe = tk.Frame(self.window)#, background="green")
         self.sidebar = tk.Frame(self.window)#, background="red")
 
@@ -71,6 +74,11 @@ class SnipeTool:
         self.bar.stop()
         self.window.destroy()
         self.settings.save_settings("settings/snipetool_config.yaml")
+
+    def on_resize(self, event):
+        if (event.widget == self.window):
+            self.bar.on_resize(event)
+            self.settingsmenu.on_resize(event)
 
     def setup(self):
         self.setup_window()
