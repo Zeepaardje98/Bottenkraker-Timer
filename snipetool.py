@@ -28,8 +28,8 @@ class SnipeTool:
         self.entries = Entries(self.widgetframe, self.snipe_time, Settings(self.settings.get_settings(['entries'], {})))
         self.time_selector = Timesync(self.widgetframe, self.clock, Settings(self.settings.get_settings(['timesync'], {})))
         self.bar = Bar(self.window, Settings(self.settings.get_settings(['bar'], {})))
-        self.settingsmenu = SettingsMenu(self, self.window, self.settings)
         self.ghublink = Ghub(self.sidebar, Settings(self.settings.get_settings(['ghub'], {})))
+        self.settingsmenu = SettingsMenu(self, self.window, self.settings)
 
 
     def setup_window(self):
@@ -60,8 +60,6 @@ class SnipeTool:
         ghub_btn.grid(row=1, column=0, pady=(2, 2))
 
         self.sidebar.pack(side="right", padx=(0, 10))
-
-
 
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 

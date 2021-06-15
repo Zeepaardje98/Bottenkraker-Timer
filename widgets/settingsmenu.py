@@ -13,11 +13,19 @@ class SettingsMenu:
         self.frame = None
 
         self.logo = None
+        self.settings_btn1 = None
+
+    def on_resize(self, event):
+        self.frame.config(width=self.window.winfo_width(),
+                          height=self.window.winfo_height() - self.parent.bar.bar_canvas.winfo_height())
 
     def show_popup(self):
+        self.frame.config(width=self.window.winfo_width(),
+                          height=self.window.winfo_height() - self.parent.bar.bar_canvas.winfo_height())
         if not self.opened:
             self.opened = True
             self.frame.place(x=0, y=0)
+            self.parent.sidebar.tkraise()
         else:
             self.opened = False
             self.frame.place_forget()
@@ -44,11 +52,15 @@ class SettingsMenu:
         self.setup_settings()
 
         self.logo = open_image("images/settings_dark.png", (20,20))
-        settings_btn = tk.Button(self.parent.sidebar, image=self.logo, width=20, height=20, relief='flat', command=self.show_popup)
-        return settings_btn
+        self.settings_btn1 = tk.Button(self.parent.sidebar, image=self.logo, width=20, height=20, relief='flat', command=self.show_popup)
+
+        return self.settings_btn1
 
     def setup_settings(self):
-        self.frame = tk.Frame(self.window, width=self.window.winfo_width(), height=self.window.winfo_height())
+        self.frame = tk.Frame(self.window)
+        self.frame.pack_propagate(False)
+        print(self.window.winfo_width(), self.window.winfo_height())
+        print(self.frame.winfo_width(), self.frame.winfo_height())
 
         # bar color settings
         color_frame = tk.Frame(self.frame, width=80 + 10 + 80, height=90)
@@ -72,10 +84,10 @@ class SettingsMenu:
         # StringVars of all the settings
         stringvars = [ec_sv, fc_sv, dc_sv]
 
-        btn_frame = tk.Frame(self.frame, width=100, height=30)
+        btn_frame = tk.Frame(self.frame, width=100, height=28)
         submit_btn = tk.Button(btn_frame, text='Save', command=lambda: self.submit_entries(stringvars))
         submit_btn.place(x=0, y=0, width=50, height=28)
         empty_btn = tk.Button(btn_frame, text='Empty', command=lambda: self.empty_entries(stringvars))
         empty_btn.place(x=50, y=0, width=50, height=28)
 
-        btn_frame.place(x=290, y=110)
+        btn_frame.pack(side="bottom")
