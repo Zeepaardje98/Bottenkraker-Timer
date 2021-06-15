@@ -2,11 +2,11 @@ import tkinter as tk
 import datetime
 
 class Bar:
-    def __init__(self, window, settings):
+    def __init__(self, window, height, settings):
         self.window = window
 
         self.bar_colors = settings.get_settings(['colors'])
-        self.bar_height = 40
+        self.bar_height = height
         self.bar_width = self.window.winfo_reqwidth()
 
         self.bar_canvas = None
