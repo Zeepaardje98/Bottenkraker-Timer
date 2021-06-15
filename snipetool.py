@@ -74,8 +74,6 @@ class SnipeTool:
             self.settingsscreen.on_resize(event)
             self.mainscreen.on_resize(event)
 
-        print(self.window.winfo_width(), self.window.winfo_height())
-
     def setup(self):
         self.setup_window()
         self.run()
