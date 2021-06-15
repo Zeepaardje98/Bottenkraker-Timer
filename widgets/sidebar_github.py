@@ -3,7 +3,6 @@ import webbrowser
 
 from help_funcs.helper import open_image
 
-
 class Ghub:
     def __init__(self, window, settings):
         self.window = window
