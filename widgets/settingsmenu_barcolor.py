@@ -1,6 +1,8 @@
 import tkinter as tk
 import re
 
+from settings import Settings
+
 def valid_color(string):
     regex = re.compile("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
     colors = ["white", "black", "red", "green", "blue", "cyan", "yellow", "magenta", "orange", "grey"]
