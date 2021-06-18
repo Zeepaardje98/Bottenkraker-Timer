@@ -28,7 +28,7 @@ class SnipeTool:
 
         self.mainscreen = MainScreen(self)
         self.standard_size = "330x190"
-        self.settingsscreen = SettingsScreen(self)
+        self.settingsscreen = SettingsScreen(self, Settings(self.settings.get_settings(['bar', 'colors'], {})))
 
 
     def setup_window(self):
