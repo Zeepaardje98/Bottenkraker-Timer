@@ -14,12 +14,12 @@ class Ghub:
     def github(self):
         webbrowser.open(self.settings.get_settings(['link']))
 
-    def change_logo(self, path):
-        self.logo = open_image(path, (20,20))
-        self.btn.config(image=self.logo)
-
     def setup_window(self):
         self.logo = open_image(self.settings.get_settings(['image']), (20,20))
         self.btn = tk.Button(self.window, image=self.logo, width=20, height=20, relief='flat', bd=0, command=self.github)
 
         return self.btn
+
+    def change_logo(self, path):
+        self.logo = open_image(path, (20,20))
+        self.btn.config(image=self.logo)

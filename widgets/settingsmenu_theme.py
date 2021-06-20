@@ -79,12 +79,6 @@ class Theme:
                               fg = self.settings.get_settings(['themes', theme, 'text']),
                               activebackground = self.settings.get_settings(['themes', theme, 'primary']),
                               relief="flat")
-                              # highlightcolor = self.settings.get_settings(['themes', theme, 'background']),
-                              # highlightbackground = self.settings.get_settings(['themes', theme, 'background']))
-            else:
-                print(widget.winfo_class())
-
-
 
         if len(widget.children.values()) < 0:
             return
