@@ -96,7 +96,7 @@ class Timesync:
 
         # Server select button with confirm
         selector = tk.OptionMenu(sync_frame, sv_server, *self.servers)
-        selector.configure(width=10)
+        selector.config(width=10)
         submit_btn = tk.Button(sync_frame, text='Sync', command=lambda: self.select_server(sv_server))
 
         selector.grid(row=0, column=0)

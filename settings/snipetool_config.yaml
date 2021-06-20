@@ -13,18 +13,23 @@ entries:
 ghub:
   image: images/Ghub_logo_dark.png
   link: https://github.com/Zeepaardje98/Bottenkraker-Timer
-selected_theme: default
+selected_theme: dark
 themes:
   dark:
-    background: '#121212'
-    border: '#000000'
+    background: '#0E1013'
+    border: '#17181B'
+    button: '#202124'
+    entry: '#282A2D'
+    ghub_im: images/Ghub_logo_light.png
+    primary: '#6200EE'
+    settings_im: images/settings_light.png
     text: '#FFFFFF'
   default:
     background: None
     border: None
     text: None
 timesync:
-  selected: standard
+  selected: pool.ntp.org
   servers:
     pool.ntp.org:
       delay: 85
