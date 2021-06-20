@@ -11,7 +11,7 @@ class Entries:
     def __init__(self, window, entries_ref, settings):
         self.window = window
         self.settings = settings
-        self.defaults = settings.get_settings(['defaults'], {'arrival': 'vandaag 04:20:00', 'ms': 0, 'walktime': '00:00:00'})
+        self.defaults = settings.get_settings(["entries", "defaults"], {'arrival': 'vandaag 04:20:00', 'ms': 0, 'walktime': '00:00:00'})
 
         self.st_entry = None
         self.sm_entry = None
@@ -38,6 +38,8 @@ class Entries:
                            re.compile('^(morgen)\s\d{1,2}:\d{1,2}:\d{1,2}$')]                       # morgen hh:mm:ss
 
     def update_vars(self, stringvar):
+        theme = self.settings.get_settings(["selected_theme"])
+
         if str(stringvar) == "SNIPETIME":
             entry_white = True
             string = stringvar.get()
@@ -84,10 +86,10 @@ class Entries:
 
             # Change entry color based on right/wrong input
             if not entry_white and self.st_entry_white:
-                self.st_entry.config({"background": self.settings.get_settings(['wrong_color'])})
+                self.st_entry.config({"background": self.settings.get_settings(["themes", theme, "entry_wrong"])})
                 self.st_entry_white = False
             elif entry_white and not self.st_entry_white:
-                self.st_entry.config({"background": self.settings.get_settings(['right_color'])})
+                self.st_entry.config({"background": self.settings.get_settings(["themes", theme, "entry"])})
                 self.st_entry_white = True
 
         elif str(stringvar) == "SNIPEMS":
@@ -105,10 +107,10 @@ class Entries:
 
             # Change entry color based on right/wrong input
             if not entry_white and self.sm_entry_white:
-                self.sm_entry.config({"background": self.settings.get_settings(['wrong_color'])})
+                self.sm_entry.config({"background": self.settings.get_settings(["themes", theme, "entry_wrong"])})
                 self.sm_entry_white = False
             elif entry_white and not self.sm_entry_white:
-                self.sm_entry.config({"background": self.settings.get_settings(['right_color'])})
+                self.sm_entry.config({"background": self.settings.get_settings(["themes", theme, "entry"])})
                 self.sm_entry_white = True
 
         elif str(stringvar) == "WALKTIME":
@@ -125,10 +127,10 @@ class Entries:
                 entry_white = False
 
             if not entry_white and self.wt_entry_white:
-                self.wt_entry.config({"background": self.settings.get_settings(['wrong_color'])})
+                self.wt_entry.config({"background": self.settings.get_settings(["themes", theme, "entry_wrong"])})
                 self.wt_entry_white = False
             elif entry_white and not self.wt_entry_white:
-                self.wt_entry.config({"background": self.settings.get_settings(['right_color'])})
+                self.wt_entry.config({"background": self.settings.get_settings(["themes", theme, "entry"])})
                 self.wt_entry_white = True
 
     def setup_window(self):

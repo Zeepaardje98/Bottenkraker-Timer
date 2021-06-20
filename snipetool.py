@@ -55,7 +55,7 @@ class SnipeTool:
         sidebar.pack(side="right", pady=(5, 0))
 
         # Apply theme
-        self.settingsscreen.theme.apply_theme()
+        self.settingsscreen.theme.apply_colors(self.window)
 
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 
