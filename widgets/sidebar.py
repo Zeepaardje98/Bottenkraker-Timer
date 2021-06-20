@@ -19,8 +19,8 @@ class SideBar:
 
     def setup_window(self, settingsscreen, mainscreen):
         settings_btn = self.settingsbutton.setup_window(settingsscreen.frame, mainscreen.frame)
-        settings_btn.pack(side="top")
+        settings_btn.pack(side="top", pady=(0, 0))
 
         ghub_btn = self.ghublink.setup_window()
-        ghub_btn.pack(side="top")
+        ghub_btn.pack(side="top", pady=(5, 0))
         return self.frame

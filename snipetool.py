@@ -28,7 +28,7 @@ class SnipeTool:
 
         self.mainscreen = MainScreen(self)
         self.standard_size = "330x190"
-        self.settingsscreen = SettingsScreen(self)
+        self.settingsscreen = SettingsScreen(self, self.settings)
 
 
     def setup_window(self):
@@ -53,6 +53,9 @@ class SnipeTool:
         # Sidebar
         sidebar = self.sidebar.setup_window(self.settingsscreen, self.mainscreen)
         sidebar.pack(side="right", pady=(5, 0))
+
+        # Apply theme
+        self.settingsscreen.theme.apply_theme()
 
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 
