@@ -11,8 +11,11 @@ class SideBar:
         self.frame = tk.Frame(root.window, height=root.window.winfo_height(), width=self.width)#, background="yellow")
         self.frame.pack_propagate(False)
 
-        self.ghublink = Ghub(self.frame, Settings(root.settings.get_settings(['ghub'], {})))
-        self.settingsbutton = SettingsButton(self.frame)
+        self.ghublink = Ghub(self.frame, Settings({"ghub": root.settings.get_settings(["ghub"]),
+                                                   "themes": root.settings.get_settings(["themes"]),
+                                                   "selected_theme": root.settings.get_settings(["selected_theme"])}))
+        self.settingsbutton = SettingsButton(self.frame, Settings({"themes": root.settings.get_settings(["themes"]),
+                                                                   "selected_theme": root.settings.get_settings(["selected_theme"])}))
 
     def on_resize(self, event):
         self.frame.config(height=self.root.window.winfo_height())

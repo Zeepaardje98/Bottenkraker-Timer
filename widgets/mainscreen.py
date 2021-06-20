@@ -10,7 +10,7 @@ class MainScreen:
                                                 height=self.root.window.winfo_height() - self.root.bar.bar_height - 4)#, background="red")
         self.frame.grid_propagate(False)
 
-        self.entries = Entries(self.frame, self.root.snipe_time, Settings(self.root.settings.get_settings(['entries'], {})))
+        self.entries = Entries(self.frame, self.root.snipe_time, self.root.settings)
         self.time_selector = Timesync(self.frame, self.root.clock, Settings(self.root.settings.get_settings(['timesync'], {})))
 
     def on_resize(self, event):
