@@ -16,15 +16,9 @@ class Theme:
         label = tk.Label(theme_frame, text="Theme:", anchor='w')
         label.grid(row=0, column=0)
         sv = tk.StringVar(theme_frame, self.settings.get_settings(['selected_theme']))
-        entry = tk.Entry(theme_frame, textvariable=sv, width=10)
-        entry.grid(row=0, column=1)
-
-        btn_frame = tk.Frame(theme_frame, width=100, height=28)
-        submit_btn = tk.Button(btn_frame, text="Save", command=lambda: self.submit_theme(sv))
-        submit_btn.place(x=0, y=0, width=50, height=28)
-        empty_btn = tk.Button(btn_frame, text="Empty", command=lambda: self.empty_theme(sv))
-        empty_btn.place(x=50, y=0, width=50, height=28)
-        btn_frame.grid(row=1, column=0, columnspan=2, pady=(3,0))
+        selector = tk.OptionMenu(theme_frame, sv, *self.settings.get_settings(['themes']), command=lambda x: self.submit_theme(sv))
+        selector.config(width=10)
+        selector.grid(row=0, column=1)
 
         return theme_frame
 
