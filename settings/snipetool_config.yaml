@@ -8,9 +8,10 @@ entries:
     arrival: vandaag 04:20:00
     ms: 0
     walktime: 00:00:00
+  right_color: '#282A2D'
 ghub:
   link: https://github.com/Zeepaardje98/Bottenkraker-Timer
-selected_theme: cacturne
+selected_theme: dark
 themes:
   cacturne:
     background: '#0E1013'
