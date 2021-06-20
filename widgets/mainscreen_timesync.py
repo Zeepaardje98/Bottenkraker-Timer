@@ -3,6 +3,8 @@ import tkinter as tk
 from help_funcs.helper import open_image
 from clock import Clock
 
+from math import floor
+
 
 class Timesync:
     def __init__(self, window, clock_ref, settings):
@@ -64,7 +66,7 @@ class Timesync:
         if diff < 60:
             return str(round(diff)) + " s"
         if diff >= 60:
-            return str(math.floor(diff / 60)) + " m"
+            return str(floor(diff / 60)) + " m"
 
     def update_sync_symbol(self, time):
         if self.clock[0].server_sync:
