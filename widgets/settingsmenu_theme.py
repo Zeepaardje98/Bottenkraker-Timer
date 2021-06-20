@@ -98,6 +98,7 @@ class Theme:
     def submit_theme(self, sv):
         if self.valid_theme(sv.get()):
             self.settings.update_settings(['selected_theme'], sv.get())
+            self.settings.update_settings(['entries', 'right_color'], self.settings.get_settings(['themes', sv.get(), 'entry']))
             self.apply_theme()
 
             # theme = self.settings.get_settings(["selected_theme"])
