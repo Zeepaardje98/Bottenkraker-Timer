@@ -4,7 +4,7 @@ from widgets.mainscreen_timesync import Timesync
 from settings import Settings
 
 class MainScreen:
-    def __init__(self, root):
+    def __init__(self, root, cur):
         self.root = root
         self.frame = tk.Frame(self.root.window, width=self.root.window.winfo_width() - self.root.sidebar.width,
                                                 height=self.root.window.winfo_height() - self.root.bar.bar_height - 4)#, background="red")

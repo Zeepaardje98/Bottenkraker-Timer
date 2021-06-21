@@ -3,14 +3,14 @@ import tkinter as tk
 from help_funcs.helper import open_image
 
 class SettingsButton:
-    def __init__(self, parent, settings):
+    def __init__(self, parent, settings, cur):
         self.parent = parent
         self.settings = settings
+        self.currentscreen = cur
 
         self.new = None
         self.old = None
 
-        self.opened = False
         self.logo = None
         self.settings_btn = None
 
@@ -28,9 +28,9 @@ class SettingsButton:
         self.settings_btn.config(image=self.logo)
 
     def show_popup(self):
-        if not self.opened:
-            self.opened = True
+        if self.currentscreen[0] != "settings":
+            self.currentscreen[0] = "settings"
             self.new.tkraise()
         else:
-            self.opened = False
             self.old.tkraise()
+            self.currentscreen[0] = "main"
