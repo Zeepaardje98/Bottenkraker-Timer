@@ -8,15 +8,16 @@ entries:
     arrival: vandaag 04:20:00
     ms: 0
     walktime: 00:00:00
-  right_color: '#282A2D'
+  right_color: '#1E5631'
 ghub:
   link: https://github.com/Zeepaardje98/Bottenkraker-Timer
-selected_theme: dark
+selected_theme: cacturne
 themes:
   cacturne:
     background: '#0E1013'
     border: '#ACDF87'
     button: '#1E5631'
+    donate_im: images/donate_green.png
     entry: '#1E5631'
     entry_wrong: '#E8A19C'
     ghub_im: images/Ghub_logo_green.png
@@ -29,6 +30,7 @@ themes:
     background: '#0E1013'
     border: '#17181B'
     button: '#202124'
+    donate_im: images/donate_light.png
     entry: '#282A2D'
     entry_wrong: '#E8A19C'
     ghub_im: images/Ghub_logo_light.png

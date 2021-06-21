@@ -4,6 +4,7 @@ from widgets.sidebar_settings import SettingsButton
 from widgets.sidebar_github import Ghub
 from widgets.sidebar_upload import Upload
 from widgets.sidebar_info import Info
+from widgets.sidebar_donate import Donate
 
 from settings import Settings
 
@@ -25,6 +26,8 @@ class SideBar:
                                                               "selected_theme": root.settings.get_settings(["selected_theme"])}))
         self.info = Info(self.root, self.frame, Settings({"themes": root.settings.get_settings(["themes"]),
                                                           "selected_theme": root.settings.get_settings(["selected_theme"])}), self.currentscreen)
+        self.donate = Donate(self.frame, Settings({"themes": root.settings.get_settings(["themes"]),
+                                                   "selected_theme": root.settings.get_settings(["selected_theme"])}))
 
 
     def on_resize(self, event):
@@ -32,15 +35,18 @@ class SideBar:
 
     def setup_window(self, settingsscreen, infoscreen, mainscreen):
         settings_btn = self.settingsbutton.setup_window(settingsscreen.frame, mainscreen.frame)
-        settings_btn.pack(side="top", pady=(5, 0))
-
-        ghub_btn = self.ghublink.setup_window()
-        ghub_btn.pack(side="top", pady=(5, 0))
+        settings_btn.pack(side="top", pady=(0, 0))
 
         upload_btn = self.upload.setup_window()
         upload_btn.pack(side="top", pady=(5, 0))
 
+        ghub_btn = self.ghublink.setup_window()
+        ghub_btn.pack(side="top", pady=(5, 0))
+
         info_btn = self.info.setup_window(infoscreen.frame, mainscreen.frame)
         info_btn.pack(side="top", pady=(5, 0))
+
+        donate_btn = self.donate.setup_window()
+        donate_btn.pack(side="top", pady=(5, 0))
 
         return self.frame

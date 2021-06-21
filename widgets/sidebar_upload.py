@@ -28,8 +28,6 @@ class Upload:
                 entries.sv_ms.set(dict["snipe_ms"])
             if "walk_time" in dict.keys():
                 entries.sv_walk.set(dict["walk_time"])
-# {"walk_time": "00:05:00", "snipe_ms": "500", "snipe_time": "vandaag 17:00:00"}
-
 
     def change_logo(self, path):
         self.logo = open_image(path, (25,25))
