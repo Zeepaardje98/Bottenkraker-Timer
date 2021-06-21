@@ -4,6 +4,7 @@ import tkinter as tk
 from widgets.bar import Bar
 from widgets.mainscreen import MainScreen
 from widgets.settingsmenu import SettingsScreen
+from widgets.infoscreen import InfoScreen
 from widgets.sidebar import SideBar
 # from widgets.sidebar_settings import SettingsButton
 # from widgets.sidebar_github import Ghub
@@ -23,13 +24,15 @@ class SnipeTool:
         self.snipe_time = []
         self.clock = []
 
+        self.currentscreen = [None]
+
         self.bar = Bar(self.window, 40, Settings(self.settings.get_settings(['bar'], {})))
         self.sidebar = SideBar(self, 30)
 
-        self.mainscreen = MainScreen(self)
+        self.mainscreen = MainScreen(self, self.currentscreen)
         self.standard_size = "330x190"
-        self.settingsscreen = SettingsScreen(self, self.settings)
-
+        self.settingsscreen = SettingsScreen(self, self.settings, self.currentscreen)
+        self.infoscreen = InfoScreen(self, self.settings)
 
     def setup_window(self):
         self.window.attributes('-topmost', True)
@@ -42,6 +45,9 @@ class SnipeTool:
         bar_canvas.pack(side="bottom")
 
         # Main screen
+        # Info
+        self.info_frame = self.infoscreen.setup_window()
+        self.info_frame.place(x=0, y=0)
         # Settings
         self.settings_frame = self.settingsscreen.setup_window()
         self.settings_frame.place(x=0, y=0)
@@ -49,9 +55,10 @@ class SnipeTool:
         self.mainscreen_frame = self.mainscreen.setup_window()
         self.mainscreen_frame.place(x=0, y=0)
         self.mainscreen_frame.tkraise()
+        self.currentscreen[0] = "main"
 
         # Sidebar
-        sidebar = self.sidebar.setup_window(self.settingsscreen, self.mainscreen)
+        sidebar = self.sidebar.setup_window(self.settingsscreen, self.infoscreen, self.mainscreen)
         sidebar.pack(side="right", pady=(5, 0))
 
         # Apply theme
@@ -76,6 +83,7 @@ class SnipeTool:
             self.sidebar.on_resize(event)
             self.settingsscreen.on_resize(event)
             self.mainscreen.on_resize(event)
+            self.infoscreen.on_resize(event)
 
     def setup(self):
         self.setup_window()

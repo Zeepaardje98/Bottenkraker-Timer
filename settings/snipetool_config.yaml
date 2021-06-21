@@ -20,9 +20,11 @@ themes:
     entry: '#1E5631'
     entry_wrong: '#E8A19C'
     ghub_im: images/Ghub_logo_green.png
+    info_im: images/info_green.png
     primary: '#519839'
     settings_im: images/settings_green.png
     text: '#FFFFFF'
+    upload_im: images/upload_green.png
   dark:
     background: '#0E1013'
     border: '#17181B'
@@ -30,9 +32,11 @@ themes:
     entry: '#282A2D'
     entry_wrong: '#E8A19C'
     ghub_im: images/Ghub_logo_light.png
+    info_im: images/info_light.png
     primary: '#6200EE'
     settings_im: images/settings_light.png
     text: '#FFFFFF'
+    upload_im: images/upload_light.png
 timesync:
   selected: pool.ntp.org
   servers:

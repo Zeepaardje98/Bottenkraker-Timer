@@ -38,11 +38,11 @@ class Timesync:
     def update_image(self):
         try:
             if self.servers[self.selected]['image'] == '':
-                self.file = open_image("images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
+                self.file = open_image("images/default.png", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
             else:
                 self.file = open_image(self.servers[self.selected]['image'], (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
         except Exception:
-            self.file = open_image(self, "images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
+            self.file = open_image("images/default.png", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
         self.image_canvas.itemconfig(self.image, image=self.file)
 
     def select_server(self, sv_server):
@@ -88,7 +88,7 @@ class Timesync:
         # TODO: fix this actually placing an image(there is currently a bug
         #       where no image will show until a new server is synced)
         self.image_canvas = tk.Canvas(self.window, width=80, height=80, background="grey")
-        self.file = open_image("images/default.jpg", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
+        self.file = open_image("images/default.png", (self.image_canvas.winfo_height(), self.image_canvas.winfo_width()))
         self.image = self.image_canvas.create_image(0, 0, image=self.file, anchor='nw')
 
         # Canvas with the synchronisation symbol + text
