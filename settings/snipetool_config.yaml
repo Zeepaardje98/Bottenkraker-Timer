@@ -8,10 +8,10 @@ entries:
     arrival: vandaag 04:20:00
     ms: 0
     walktime: 00:00:00
-  right_color: '#282A2D'
+  right_color: '#1E5631'
 ghub:
   link: https://github.com/Zeepaardje98/Bottenkraker-Timer
-selected_theme: dark
+selected_theme: cacturne
 themes:
   cacturne:
     background: '#0E1013'
@@ -20,9 +20,11 @@ themes:
     entry: '#1E5631'
     entry_wrong: '#E8A19C'
     ghub_im: images/Ghub_logo_green.png
+    info_im: images/info_green.png
     primary: '#519839'
     settings_im: images/settings_green.png
     text: '#FFFFFF'
+    upload_im: images/upload_green.png
   dark:
     background: '#0E1013'
     border: '#17181B'
@@ -30,9 +32,11 @@ themes:
     entry: '#282A2D'
     entry_wrong: '#E8A19C'
     ghub_im: images/Ghub_logo_light.png
+    info_im: images/info_light.png
     primary: '#6200EE'
     settings_im: images/settings_light.png
     text: '#FFFFFF'
+    upload_im: images/upload_light.png
 timesync:
   selected: pool.ntp.org
   servers:

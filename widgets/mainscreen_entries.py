@@ -13,6 +13,10 @@ class Entries:
         self.settings = settings
         self.defaults = settings.get_settings(["entries", "defaults"], {'arrival': 'vandaag 04:20:00', 'ms': 0, 'walktime': '00:00:00'})
 
+        self.sv_time = tk.StringVar(name="SNIPETIME")
+        self.sv_walk = tk.StringVar(name="WALKTIME")
+        self.sv_ms = tk.StringVar(name="SNIPEMS")
+
         self.st_entry = None
         self.sm_entry = None
         self.wt_entry = None
@@ -134,10 +138,9 @@ class Entries:
                 self.wt_entry_white = True
 
     def setup_window(self):
-        sv_time = tk.StringVar(name="SNIPETIME")
-        sv_walk = tk.StringVar(name="WALKTIME")
-        sv_ms = tk.StringVar(name="SNIPEMS")
-
+        sv_time = self.sv_time
+        sv_walk = self.sv_walk
+        sv_ms = self.sv_ms
         sv_time.trace("w", lambda name, index, mode, sv_time=sv_time: self.update_vars(sv_time))
         sv_walk.trace("w", lambda name, index, mode, sv_time=sv_time: self.update_vars(sv_walk))
         sv_ms.trace("w", lambda name, index, mode, sv_ms=sv_ms: self.update_vars(sv_ms))
@@ -154,13 +157,13 @@ class Entries:
         sm_label = tk.Label(entry_frame, text="Snipe Ms:", anchor='w')#, background="yellow")
 
         # Snipe Time entry
-        self.st_entry = tk.Entry(entry_frame, textvariable=sv_time, width=20)
+        self.st_entry = tk.Entry(entry_frame, textvariable=self.sv_time, width=20)
         self.st_entry.insert(-1, self.defaults['arrival'])
         # Walk Time entry
-        self.wt_entry = tk.Entry(entry_frame, textvariable=sv_walk, width=20)
+        self.wt_entry = tk.Entry(entry_frame, textvariable=self.sv_walk, width=20)
         self.wt_entry.insert(-1, self.defaults['walktime'])
         # Snipe Ms entry
-        self.sm_entry = tk.Entry(entry_frame, textvariable=sv_ms, width=20)
+        self.sm_entry = tk.Entry(entry_frame, textvariable=self.sv_ms, width=20)
         self.sm_entry.insert(-1, self.defaults['ms'])
 
         st_label.grid(row=0, column=0, sticky="W")

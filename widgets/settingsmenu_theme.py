@@ -84,6 +84,8 @@ class Theme:
         theme = self.settings.get_settings(["selected_theme"])
         self.root.sidebar.settingsbutton.change_logo(self.settings.get_settings(['themes', theme, 'settings_im']))
         self.root.sidebar.ghublink.change_logo(self.settings.get_settings(['themes', theme, 'ghub_im']))
+        self.root.sidebar.upload.change_logo(self.settings.get_settings(['themes', theme, 'upload_im']))
+        self.root.sidebar.info.change_logo(self.settings.get_settings(['themes', theme, 'info_im']))
 
     def apply_theme(self):
         self.apply_colors(self.root.window)
