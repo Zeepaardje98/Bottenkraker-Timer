@@ -22,7 +22,7 @@ There are 3 entry fields in this window:\
 - Snipe Ms: The millisecond entered here will determine at what millisecond the bar will be completely filled
 
 Under these entry fields is a ```Send``` label. This shows the user at what time you need to click. The bar will be completely filled up in a different color at this time.\
-![image](https://user-images.githubusercontent.com/46892835/122904296-7d6be700-d350-11eb-861a-5774d261fdf9.png)\
+![image](https://user-images.githubusercontent.com/46892835/122904296-7d6be700-d350-11eb-861a-5774d261fdf9.png)
 
 The timeserver that's being used can be found under the
 
