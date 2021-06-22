@@ -36,7 +36,7 @@ This button opens the ```Settings``` menu, where you can customize the used colo
 ![image](https://github.com/Zeepaardje98/Bottenkraker-Timer/blob/main/images/upload_light.png)\
 This button pastes the contents of the current clipboard into the entry fields(```Snipe Time```, ```Walk Time``` and ```Snipe Ms```) of the program, but only if the current clipboard contents is a python dict with the required keys: ```{"snipe_time": "vandaag 04:20:00", "walk_time": "00:00:00", "snipe_ms": 0}```.
 
-![image](https://github.com/Zeepaardje98/Bottenkraker-Timer/blob/main/images/github_light.png)\
+![image](https://github.com/Zeepaardje98/Bottenkraker-Timer/blob/main/images/Ghub_logo_light.png)\
 This button links directly to the github repository, and will open the repository in the browser.
 
 ![image](https://github.com/Zeepaardje98/Bottenkraker-Timer/blob/main/images/info_light.png)\
