@@ -12,8 +12,15 @@ Or (optional) for windows, download the .zip file of the version you want from h
 
 ## Guide to the Snipetool
 When starting the snipetool. This window will show up:
-![image](https://user-images.githubusercontent.com/46892835/122901736-1a795080-d34e-11eb-8828-2c00830ac4f8.png)
+![image](https://user-images.githubusercontent.com/46892835/122901887-485e9500-d34e-11eb-8699-02505563765f.png)
+with the bottom bar filling up exactly once every second. This bar is filled when the time reaches the millisecond given by the user. This bar will change color when the time reaches the ```Snipe Time``` minus the ```Walk Time``` given by the user.
 
+There are 3 entry fields in this window:
+- Snipe Time: The time entered here will partly determine when the bar changes color
+- Walk Time: The time entered here will be subtracted from ```Snipe Time```, to determine the time when the bar will change color
+- Snipe Ms: The millisecond entered here will determine at what millisecond the bar will be completely filled
+
+Under these entry fields is a ```Send``` label. This shows the user at what time you need to click. The bar will be completelt filled up in a different color at this time.
 
 
 
