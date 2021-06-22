@@ -15,7 +15,8 @@ class InfoScreen:
                           height=self.root.window.winfo_height() - self.root.bar.bar_height - 4)
 
     def setup_window(self):
-        string = ("This tool is made by Ricardo\n" +
+        string = ("Bottenkraker-Timer v1.1.2\n" +
+                  "This tool is made by Bottenkraker/Ricardo\n\n" +
                   "Icons by  https://icons8.com")
         text = tk.Label(self.frame, text=string)
         text.grid(row=0, column=0, padx=(10,0), pady=(5,0), sticky='W')
