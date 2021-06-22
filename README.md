@@ -12,6 +12,7 @@ Or (optional) for windows, download the .zip file of the version you want from h
 
 ## Guide to the Snipetool
 When starting the snipetool. This window will show up:
+
 ![image](https://user-images.githubusercontent.com/46892835/122901887-485e9500-d34e-11eb-8699-02505563765f.png)
 with the bottom bar filling up exactly once every second. This bar is filled when the time reaches the millisecond given by the user. This bar will change color when the time reaches the ```Snipe Time``` minus the ```Walk Time``` given by the user.
 
