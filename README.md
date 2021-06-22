@@ -18,12 +18,16 @@ When starting the snipetool. This window will show up:
 with the bottom bar filling up exactly once every second. This bar is filled when the time reaches the millisecond given by the user. This bar will change color when the time reaches the ```Snipe Time``` minus the ```Walk Time``` given by the user.
 
 There are 3 entry fields in this window:
+
+![image](https://user-images.githubusercontent.com/46892835/122903609-db4bff00-d34f-11eb-8e45-d49ebe14e2bf.png)
+
 - Snipe Time: The time entered here will partly determine when the bar changes color
 - Walk Time: The time entered here will be subtracted from ```Snipe Time```, to determine the time when the bar will change color
 - Snipe Ms: The millisecond entered here will determine at what millisecond the bar will be completely filled
 
-Under these entry fields is a ```Send``` label. This shows the user at what time you need to click. The bar will be completelt filled up in a different color at this time.
+Under these entry fields is a ```Send``` label. This shows the user at what time you need to click. The bar will be completely filled up in a different color at this time.
 
+The timeserver that's being used can be found under the
 
 
 ## Used assets
