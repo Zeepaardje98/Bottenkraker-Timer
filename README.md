@@ -7,8 +7,8 @@ This project uses several third-party packages. These can be found in ```require
 ## Run Snipetool
 To run this tool, follow these steps in the command line or terminal:
 1. Navigate to the folder containing ```snipetool.py```: cd ```Bottenkraker-Timer/```
-2. Run the snipetool: ```python snipetool.py```
-Or (optional) for windows, download the .zip file of the version you want from https://github.com/Zeepaardje98/TimeTool_Release. unzip this file, and execute snipetool.exe
+2. Run the snipetool: ```python snipetool.py```\
+Additionaly, for windows, you can download the .zip file of the version you want from https://github.com/Zeepaardje98/TimeTool_Release. unzip this file, and execute snipetool.exe
 
 ## Guide to the Snipetool
 When starting the snipetool. This window will show up:\
