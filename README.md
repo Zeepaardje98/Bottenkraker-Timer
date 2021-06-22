@@ -29,6 +29,9 @@ The timeserver that's being used can be found under the ```Send``` label, with a
 
 You can change the selected server by clicking on the currently used server, and selecting one of the options in the menu that drops down. Clicking the ```Sync``` button will synchronize the currently used time with the time of the selected server. To the right of the ```Sync``` button is an icon that shows you if you are currently synchronized with a server, and how long ago this synchronization took place. This icon will be green if you're synchronized to a server, and red if you're not synchronized to a server.
 
+On the right side of the window, several icons can be found. 
+The first being the ```Settings``` Icon.
+![image](https://github.com/Zeepaardje98/Bottenkraker-Timer/blob/main/images/settings_light.png)
 
 ## Used assets
 images from https://icons8.com/icon/set/settings/material-sharp--white
