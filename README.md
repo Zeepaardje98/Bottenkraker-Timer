@@ -24,7 +24,10 @@ There are 3 entry fields in this window:\
 Under these entry fields is a ```Send``` label. This shows the user at what time you need to click. The bar will be completely filled up in a different color at this time.\
 ![image](https://user-images.githubusercontent.com/46892835/122904296-7d6be700-d350-11eb-861a-5774d261fdf9.png)
 
-The timeserver that's being used can be found under the
+The timeserver that's being used can be found under the ```Send``` label, with a ```Sync``` button right next to it.\
+![image](https://user-images.githubusercontent.com/46892835/122905149-42b67e80-d351-11eb-846c-6b26be228614.png)
+
+You can change the selected server by clicking on the currently used server, and selecting one of the options in the menu that drops down. Clicking the ```Sync``` button will synchronize the currently used time with the time of the selected server. To the right of the ```Sync``` button is an icon that shows you if you are currently synchronized with a server, and how long ago this synchronization took place. This icon will be green if you're synchronized to a server, and red if you're not synchronized to a server.
 
 
 ## Used assets
