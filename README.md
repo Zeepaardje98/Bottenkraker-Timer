@@ -2,7 +2,8 @@
 This repository contains the code for a tool that helps with timing clicks manually. This project is written in Python 3.
 
 ## Packages
-This project uses several third-party packages. These can be found in ```requirements.txt```. To install the packages all at once, the following command can be run: ```pip install --no-cache-dir -r requirements.txt```. Keep in mind that you need to have installed python3-pip for this to work.
+This project uses several third-party packages. These can be found in ```requirements.txt```. To install the packages all at once, the following command can be run: ```pip install --no-cache-dir -r requirements.txt```. Keep in mind that you need to have installed python3-pip for this to work. Next to pip-installable dependencies, the project also depends on `tkinter`. This can be installed with the package manager, package name being `python3.x-tkinter` or `python3.x-tk`, substituting x for the current python version.\
+For example on debian: `sudo apt-get -yqq install python3.9-tk`. 
 
 ## Run Snipetool
 To run this tool, follow these steps in the command line or terminal:

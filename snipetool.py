@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import _tkinter
 import tkinter as tk
 
 from widgets.bar import Bar
@@ -38,7 +39,11 @@ class SnipeTool:
         self.window.attributes('-topmost', True)
         self.window.geometry(self.standard_size)
         self.window.title("Bottenkraker Snipetool")
-        self.window.wm_iconbitmap('images/icon.ico')
+        try:
+            self.window.wm_iconbitmap('images/icon.ico')
+        except _tkinter.TclError:
+            # Failed to load bitmap, this is not a fatal error
+            pass
 
         # Bar
         bar_canvas = self.bar.setup_window()
